@@ -2,3 +2,6 @@
 
 # Maven
 target
+
+# macOs
+.DS_Store
