@@ -1,13 +1,19 @@
 package ch.heigvd.dil;
 
+import ch.heigvd.dil.cli_cmds.NewCmd;
+import picocli.CommandLine;
+
 /**
- * Hello world!
- *
+ * DILemme !
  */
+@CommandLine.Command(name = "ISOCodeResolver",
+        subcommands = { NewCmd.class /*, CommandLine.HelpCommand.class */ },
+        description = "")
 public class Main
 {
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
-        System.out.println( "Hello World!" );
+        int exitCode = new CommandLine(new Main()).execute(args);
+        System.exit(exitCode);
     }
 }
