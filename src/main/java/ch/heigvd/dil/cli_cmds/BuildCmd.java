@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 public class BuildCmd implements Callable<Integer> {
     @Override
     public Integer call() {
-        System.out.println("NewCmd.call has been called !");
+        System.out.println("BuildCmd.call has been called !");
         return 0;
     }
 }

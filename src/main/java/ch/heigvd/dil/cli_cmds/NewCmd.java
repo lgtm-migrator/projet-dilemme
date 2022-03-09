@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 public class NewCmd implements Callable<Integer> {
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         System.out.println("NewCmd.call has been called !");
         return 0;
     }
