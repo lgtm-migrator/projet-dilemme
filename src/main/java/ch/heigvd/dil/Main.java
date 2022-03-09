@@ -1,5 +1,6 @@
 package ch.heigvd.dil;
 
+import ch.heigvd.dil.cli_cmds.CleanCmd;
 import ch.heigvd.dil.cli_cmds.NewCmd;
 import picocli.CommandLine;
 
@@ -7,7 +8,7 @@ import picocli.CommandLine;
  * DILemme !
  */
 @CommandLine.Command(name = "ISOCodeResolver",
-        subcommands = { NewCmd.class /*, CommandLine.HelpCommand.class */ },
+        subcommands = { NewCmd.class, CleanCmd.class /*, CommandLine.HelpCommand.class */ },
         description = "")
 public class Main
 {
