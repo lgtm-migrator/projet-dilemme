@@ -7,7 +7,7 @@ import picocli.CommandLine;
  * DILemme !
  */
 @CommandLine.Command(name = "DILemme",
-        subcommands = { NewCmd.class, CleanCmd.class, BuildCmd.class /*, CommandLine.HelpCommand.class */ },
+        subcommands = { NewCmd.class, CleanCmd.class, BuildCmd.class, ServeCmd.class /*, CommandLine.HelpCommand.class */ },
         description = "")
 public class Main
 {
