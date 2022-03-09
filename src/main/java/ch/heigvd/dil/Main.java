@@ -1,14 +1,13 @@
 package ch.heigvd.dil;
 
-import ch.heigvd.dil.cli_cmds.CleanCmd;
-import ch.heigvd.dil.cli_cmds.NewCmd;
+import ch.heigvd.dil.cli_cmds.*;
 import picocli.CommandLine;
 
 /**
  * DILemme !
  */
-@CommandLine.Command(name = "ISOCodeResolver",
-        subcommands = { NewCmd.class, CleanCmd.class /*, CommandLine.HelpCommand.class */ },
+@CommandLine.Command(name = "DILemme",
+        subcommands = { NewCmd.class, CleanCmd.class, BuildCmd.class /*, CommandLine.HelpCommand.class */ },
         description = "")
 public class Main
 {
