@@ -10,7 +10,8 @@ import picocli.CommandLine;
       NewCmd.class,
       CleanCmd.class,
       BuildCmd.class,
-      ServeCmd.class /*, CommandLine.HelpCommand.class */
+      ServeCmd.class, /*, CommandLine.HelpCommand.class */
+      VersionCmd.class,
     },
     description = "")
 public class Main {
