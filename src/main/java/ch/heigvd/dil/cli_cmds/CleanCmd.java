@@ -1,9 +1,8 @@
 package ch.heigvd.dil.cli_cmds;
 
-import picocli.CommandLine;
-
-import java.util.concurrent.Callable;
 import java.io.*;
+import java.util.concurrent.Callable;
+import picocli.CommandLine;
 
 @CommandLine.Command(name = "clean", description = "")
 public class CleanCmd implements Callable<Integer> {

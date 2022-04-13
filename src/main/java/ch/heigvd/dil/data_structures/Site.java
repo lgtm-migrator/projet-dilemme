@@ -1,8 +1,7 @@
 package ch.heigvd.dil.data_structures;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.List;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /** Représente un site. */
 public class Site {
