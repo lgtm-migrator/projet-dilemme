@@ -2,6 +2,9 @@ package ch.heigvd.dil.utils;
 
 import ch.heigvd.dil.data_structures.Site;
 
+/**
+ * Permet de générer un fichier HTML à partir d'un site.
+ */
 public class HTMLSiteGenerator {
   private final Site site;
 
@@ -13,8 +16,8 @@ public class HTMLSiteGenerator {
   }
 
   /**
-   * Generates the HTML code for the site.
-   * @param path Destination path for the generated HTML files.
+   * Genère le site sous forme de code HTML.
+   * @param path Chemin de destination où sera généré le site.
    */
   public void generate(String path) {
     // TODO: Implement this method
