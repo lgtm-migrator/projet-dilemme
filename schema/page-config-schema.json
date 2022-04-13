@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Page configuration",
+  "description": "Page configuration",
+  "required": [ "title", "author", "date"],
+  "type": "object",
+  "properties": {
+    "title": {
+      "description": "Page's title",
+      "type": "string"
+    },
+    "author": {
+      "description": "Page's author",
+      "type": "string"
+    },
+    "date": {
+      "type": "date",
+      "description" : "Publication date"
+    }
+  }
+}
