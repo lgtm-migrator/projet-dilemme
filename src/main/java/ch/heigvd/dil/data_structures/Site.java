@@ -1,7 +1,7 @@
 package ch.heigvd.dil.data_structures;
 
 import java.util.List;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 
 /** Représente un site. */
 public class Site {
@@ -21,7 +21,7 @@ public class Site {
    * @return Les pages contenues dans le site
    */
   public List<Page> retrievePages() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("You must implement this method");
   }
 
   /** Représentes la configuration d'un site */
