@@ -1,16 +1,7 @@
-TITLE:titre
-AUTHOR:Eliott Chytil
-DATE:21-03-10
+{
+  "title": "title",
+  "author": "author",
+  "date": "2022-04-14"
+}
 ---
-# Titre au format md
-
-## sous-titre
-
-Ceci est le contenu de l'article
-
-## sous-titre 2
-
-Ceci ...
-
-
-![imageExample](image.jpg)
+# Your content here
