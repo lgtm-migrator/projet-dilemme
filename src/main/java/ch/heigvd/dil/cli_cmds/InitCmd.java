@@ -2,12 +2,11 @@ package ch.heigvd.dil.cli_cmds;
 
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
-import picocli.CommandLine;
-
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
-import java.io.*;
+import picocli.CommandLine;
 
 /** Cette classe permet d'initialiser un site. */
 @CommandLine.Command(name = "init", description = "")
