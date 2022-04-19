@@ -9,11 +9,11 @@ import org.json.JSONTokener;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ConfigValidator {
+public class ConfigGenerator {
 
     private final JSONObject validConfig;
 
-    public ConfigValidator (String config, String schemaPath) {
+    public ConfigGenerator (String config, String schemaPath) {
         try {
             validConfig = validateConfig(config, readSchema(schemaPath));
         } catch (ValidationException e) {
