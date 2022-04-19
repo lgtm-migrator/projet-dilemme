@@ -1,8 +1,7 @@
 package ch.heigvd.dil.cli_cmds;
 
-import picocli.CommandLine;
-
 import java.util.concurrent.Callable;
+import picocli.CommandLine;
 
 @CommandLine.Command(name = "build", description = "")
 public class BuildCmd implements Callable<Integer> {

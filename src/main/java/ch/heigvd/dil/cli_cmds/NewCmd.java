@@ -1,7 +1,7 @@
 package ch.heigvd.dil.cli_cmds;
 
-import picocli.CommandLine;
 import java.util.concurrent.Callable;
+import picocli.CommandLine;
 
 @CommandLine.Command(name = "new", description = "")
 public class NewCmd implements Callable<Integer> {
