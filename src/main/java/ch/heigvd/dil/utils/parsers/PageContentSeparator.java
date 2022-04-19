@@ -1,13 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
 import ch.heigvd.dil.data_structures.Page;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Permet de lire un fichier représentant une page et de parser
