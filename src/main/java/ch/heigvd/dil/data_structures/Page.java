@@ -59,9 +59,7 @@ public class Page {
       this.date = date;
     }
 
-    public Config() {
-
-    }
+    public Config() {}
 
     /**
      * @return Le titre de la page.
