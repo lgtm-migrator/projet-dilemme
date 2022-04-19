@@ -1,6 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
 import ch.heigvd.dil.data_structures.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.text.ParseException;
 
 /**
