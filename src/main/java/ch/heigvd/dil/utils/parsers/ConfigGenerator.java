@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -21,7 +20,8 @@ public class ConfigGenerator<T> {
   private final JSONObject validConfig;
   private final Class<T> configType;
 
-  public ConfigGenerator(String config, String schemaPath, Class<T> targetClass) throws ValidationException {
+  public ConfigGenerator(String config, String schemaPath, Class<T> targetClass)
+      throws ValidationException {
     configType = targetClass;
     validConfig = validateConfig(config, readSchema(schemaPath));
   }
@@ -53,7 +53,7 @@ public class ConfigGenerator<T> {
     } catch (IOException e) {
       // Cette erreur n'est pas dépendante de l'utilisateur et ne devrait pas se produire,
       // sauf si on fait des erreurs de programmation.
-      assert(true);
+      assert (true);
       throw new RuntimeException(e.getMessage());
     }
     return out;
