@@ -1,7 +1,7 @@
 {
     "title" : "title example",
     "author" : "Eliott Chytil",
-    "date" : "21-03-10"
+    "date" : "2021-03-10"
 }
 ---
 # Titre au format md
