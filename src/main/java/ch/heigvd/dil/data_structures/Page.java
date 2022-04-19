@@ -42,9 +42,9 @@ public class Page {
 
   /** Représente la configuration d'une page. */
   public static class Config {
-    private final String title;
-    private final String author;
-    private final Date date;
+    private String title;
+    private String author;
+    private Date date;
 
     /**
      * Construit une configuration de page.
@@ -57,6 +57,10 @@ public class Page {
       this.title = title;
       this.author = author;
       this.date = date;
+    }
+
+    public Config() {
+
     }
 
     /**
