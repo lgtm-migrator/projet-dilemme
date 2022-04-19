@@ -1,6 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
 import ch.heigvd.dil.data_structures.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -48,21 +50,9 @@ public class PageContentSeparator {
   }
 
   private static Page.Config genPageConfig(String configStr) {
-
-    ConfigValidator validator = new ConfigValidator(configStr, "schema/page-config-schema.json");
-    JSONObject conf = validator.getValidConfig();
-    String dateStr = conf.getString("date");
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    Date date;
-
-    try {
-      date = sdf.parse(dateStr);
-    } catch (ParseException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException("Bad date formatting in page config");
-    }
-
-    return new Page.Config(conf.getString("title"), conf.getString("author"), date);
+    String schema = "schema/page-config-schema.json";
+    ConfigGenerator<Page.Config> validator = new ConfigGenerator<>(configStr, schema, Page.Config.class);
+    return validator.getConfigObject();
   }
+
 }
