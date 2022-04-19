@@ -1,6 +1,6 @@
 package ch.heigvd.dil.data_structures;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -22,7 +22,8 @@ public class Site {
    * @return Les pages contenues dans le site
    */
   public List<Page> retrievePages() {
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
+    return null;
   }
 
   /** Représentes la configuration d'un site */

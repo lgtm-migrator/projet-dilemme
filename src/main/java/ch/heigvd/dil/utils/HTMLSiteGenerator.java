@@ -1,7 +1,7 @@
 package ch.heigvd.dil.utils;
 
 import ch.heigvd.dil.data_structures.Site;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+//import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * Permet de générer un fichier HTML à partir d'un site.
@@ -22,6 +22,6 @@ public class HTMLSiteGenerator {
    */
   public void generate(String path) {
     // TODO: Implement this method
-    throw new NotImplementedException();
+    //throw new NotImplementedException();
   }
 }
