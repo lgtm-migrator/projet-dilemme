@@ -1,5 +1,7 @@
 package ch.heigvd.dil.utils.parsers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -9,21 +11,36 @@ import org.json.JSONTokener;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class ConfigGenerator {
+public class ConfigGenerator<T> {
 
     private final JSONObject validConfig;
+    private final Class<T> configType;
 
-    public ConfigGenerator (String config, String schemaPath) {
+    public ConfigGenerator (String config, String schemaPath, Class<T> targetClass) {
+        configType = targetClass;
         try {
             validConfig = validateConfig(config, readSchema(schemaPath));
         } catch (ValidationException e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Error in config");
         }
+
     }
 
     public JSONObject getValidConfig() {
         return validConfig;
+    }
+
+    public T getConfigObject() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        T config;
+        try {
+            config = objectMapper.readValue(validConfig.toString(), configType);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException("Error while creating Page.Config instance.");
+        }
+        return config;
     }
 
     private static JSONObject readSchema(String schemaPath) {
