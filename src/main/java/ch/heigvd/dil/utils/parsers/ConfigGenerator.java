@@ -27,10 +27,6 @@ public class ConfigGenerator<T> {
 
     }
 
-    public JSONObject getValidConfig() {
-        return validConfig;
-    }
-
     public T getConfigObject() {
         ObjectMapper objectMapper = new ObjectMapper();
         T config;
