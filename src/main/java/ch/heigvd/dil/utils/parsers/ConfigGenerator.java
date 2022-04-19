@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -20,14 +21,9 @@ public class ConfigGenerator<T> {
   private final JSONObject validConfig;
   private final Class<T> configType;
 
-  public ConfigGenerator(String config, String schemaPath, Class<T> targetClass) {
+  public ConfigGenerator(String config, String schemaPath, Class<T> targetClass) throws ValidationException {
     configType = targetClass;
-    try {
-      validConfig = validateConfig(config, readSchema(schemaPath));
-    } catch (ValidationException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException("Error in config");
-    }
+    validConfig = validateConfig(config, readSchema(schemaPath));
   }
 
   /**
@@ -39,14 +35,15 @@ public class ConfigGenerator<T> {
    */
   public T getConfigObject() {
     ObjectMapper objectMapper = new ObjectMapper();
-    T config;
+    T out;
     try {
-      config = objectMapper.readValue(validConfig.toString(), configType);
+      out = objectMapper.readValue(validConfig.toString(), configType);
     } catch (JsonProcessingException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException("Error while creating Page.Config instance.");
+      // Cette erreur n'est pas dépendante de l'utilisateur et ne devrait pas se produire,
+      // sauf si on fait des erreurs de programmation.
+      throw new RuntimeException(e.getMessage());
     }
-    return config;
+    return out;
   }
 
   private static JSONObject readSchema(String schemaPath) {
@@ -54,8 +51,10 @@ public class ConfigGenerator<T> {
     try (FileInputStream fis = new FileInputStream(schemaPath)) {
       out = new JSONObject(new JSONTokener(fis));
     } catch (IOException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException();
+      // Cette erreur n'est pas dépendante de l'utilisateur et ne devrait pas se produire,
+      // sauf si on fait des erreurs de programmation.
+      assert(true);
+      throw new RuntimeException(e.getMessage());
     }
     return out;
   }
