@@ -11,6 +11,10 @@ import org.json.JSONTokener;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * Permet de générer un objet configuration à partir d'une configuration au format JSON.
+ * @param <T> Le type de la configuration à générer.
+ */
 public class ConfigGenerator<T> {
 
     private final JSONObject validConfig;
@@ -27,6 +31,12 @@ public class ConfigGenerator<T> {
 
     }
 
+    /**
+     * Construit l'objet configuration par interpolation entre la classe passée en paramètre du
+     * constructeur et la structure de la configuration.
+     * Lève une erreur Runtime si l'interpolation ne fonctionne pas.
+     * @return L'objet de configuration
+     */
     public T getConfigObject() {
         ObjectMapper objectMapper = new ObjectMapper();
         T config;
