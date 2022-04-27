@@ -37,6 +37,7 @@ public class InitCmd implements Callable<Integer> {
 
     if (!status) {
       System.err.println("Error: Could not create config.json.");
+      return 1;
     }
 
     File contentFolder = new File(path + "/content");
@@ -53,6 +54,7 @@ public class InitCmd implements Callable<Integer> {
 
     if (!status) {
       System.err.println("Error: Could not create page.md.");
+      return 1;
     }
 
     System.out.println("Site initialized.");
