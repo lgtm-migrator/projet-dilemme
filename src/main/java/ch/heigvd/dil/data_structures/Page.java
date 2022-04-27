@@ -3,7 +3,6 @@ package ch.heigvd.dil.data_structures;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-
 import java.time.LocalDate;
 
 /** Représente une page. */
@@ -48,6 +47,7 @@ public class Page {
   public static class Config {
     private String title;
     private String author;
+
     @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate date;

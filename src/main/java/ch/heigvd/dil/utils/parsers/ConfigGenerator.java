@@ -1,9 +1,7 @@
 package ch.heigvd.dil.utils.parsers;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.FileInputStream;
 import java.io.IOException;
 import org.everit.json.schema.Schema;
