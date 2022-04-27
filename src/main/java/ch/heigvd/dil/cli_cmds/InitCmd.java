@@ -2,11 +2,10 @@ package ch.heigvd.dil.cli_cmds;
 
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
+import ch.heigvd.dil.utils.FileHandler;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
-
-import ch.heigvd.dil.utils.FileHandler;
 import picocli.CommandLine;
 
 /** Cette classe permet d'initialiser un site. */
