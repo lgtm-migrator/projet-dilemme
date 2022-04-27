@@ -1,6 +1,6 @@
 package ch.heigvd.dil.data_structures;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /** Représente une page. */
 public class Page {
@@ -44,7 +44,7 @@ public class Page {
   public static class Config {
     private final String title;
     private final String author;
-    private final Date date;
+    private final LocalDate date;
 
     /**
      * Construit une configuration de page.
@@ -53,7 +53,7 @@ public class Page {
      * @param author L'auteur de la page.
      * @param date La date de création de la page.
      */
-    public Config(String title, String author, Date date) {
+    public Config(String title, String author, LocalDate date) {
       this.title = title;
       this.author = author;
       this.date = date;
@@ -76,8 +76,22 @@ public class Page {
     /**
      * @return La date de création de la page.
      */
-    public Date getDate() {
+    public LocalDate getDate() {
       return date;
+    }
+
+    /**
+     * @return Un string représentant la configuration de la page au format JSON.
+     */
+    public String getJSON() {
+      return "{\n  \"title\": \""
+          + title
+          + "\",\n  \"author\": \""
+          + author
+          + "\",\n  "
+          + "\"date\": \""
+          + date.toString() // au format yyyy-MM-dd
+          + "\"\n}";
     }
   }
 }

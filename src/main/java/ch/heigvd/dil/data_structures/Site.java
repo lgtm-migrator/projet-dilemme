@@ -61,5 +61,20 @@ public class Site {
     public String getDomain() {
       return domain;
     }
+
+    /**
+     * @return Un string représentant la configuration du site au format JSON
+     */
+    public String getJSON() {
+      return "{"
+          + "\n  \"title\": \""
+          + title
+          + "\",\n  \"owner\": \""
+          + owner
+          + "\",\n  \"domain\":"
+          + " \""
+          + domain
+          + "\"\n}";
+    }
   }
 }
