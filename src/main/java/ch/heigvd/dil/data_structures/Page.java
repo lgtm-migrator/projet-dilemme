@@ -1,5 +1,8 @@
 package ch.heigvd.dil.data_structures;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import java.time.LocalDate;
 
 /** Représente une page. */
@@ -42,9 +45,12 @@ public class Page {
 
   /** Représente la configuration d'une page. */
   public static class Config {
-    private final String title;
-    private final String author;
-    private final LocalDate date;
+    private String title;
+    private String author;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private LocalDate date;
 
     /**
      * Construit une configuration de page.
@@ -58,6 +64,8 @@ public class Page {
       this.author = author;
       this.date = date;
     }
+
+    public Config() {}
 
     /**
      * @return Le titre de la page.
