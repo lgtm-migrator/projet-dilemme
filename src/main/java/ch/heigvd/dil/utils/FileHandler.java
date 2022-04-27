@@ -56,9 +56,9 @@ public class FileHandler {
      * Supprime un fichier ou un dossier (ainsi que ses sous-dossiers)
      *
      * @param fileOrFolder le fichier ou dossier à supprimer
+     * @return true si la suppression s'est bien passée, false sinon
      */
     public static boolean delete(File fileOrFolder) {
-        boolean status;
         if (fileOrFolder.isDirectory()) {
             File[] files = fileOrFolder.listFiles();
             if (files != null && files.length > 0) {
@@ -67,8 +67,7 @@ public class FileHandler {
                 }
             }
         }
-        status = fileOrFolder.delete();
-        return status;
+        return fileOrFolder.delete();
     }
 
 }
