@@ -13,7 +13,6 @@ public class FileHandler {
      *
      * @param file le fichier dans lequel écrire
      * @param content le contenu du fichier
-     * @return true si l'écriture s'est bien passée, false sinon
      */
     static public void write(File file, String content) throws IOException {
         BufferedWriter bw =
@@ -21,7 +20,6 @@ public class FileHandler {
                         new FileWriter(file,StandardCharsets.UTF_8));
         bw.write(content);
         bw.close();
-        return true;
     }
 
     /**
