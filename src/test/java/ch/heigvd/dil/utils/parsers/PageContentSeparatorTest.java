@@ -42,10 +42,11 @@ public class PageContentSeparatorTest {
   }
 
   @Test
-  public void parseValidFileShouldNotThrowException() {
+  public void parseValidPageFileShouldNotThrowException() {
     boolean thrown = false;
     try {
       PageContentSeparator separator = new PageContentSeparator(validPageStr);
+      //validPage = new Page(separator.getConfig(), separator.getContent())
       separator.getContent();
       separator.getConfig();
     } catch (ParseException e) {
@@ -53,4 +54,5 @@ public class PageContentSeparatorTest {
     }
     assertFalse(thrown);
   }
+
 }
