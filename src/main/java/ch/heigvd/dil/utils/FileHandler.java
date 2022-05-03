@@ -15,7 +15,7 @@ public class FileHandler {
      * @param content le contenu du fichier
      * @return true si l'écriture s'est bien passée, false sinon
      */
-    static public boolean write(File file, String content) throws IOException {
+    static public void write(File file, String content) throws IOException {
         BufferedWriter bw =
                 new BufferedWriter(
                         new FileWriter(file,StandardCharsets.UTF_8));
