@@ -1,9 +1,8 @@
 package ch.heigvd.dil.cli_cmds;
 
+import ch.heigvd.dil.utils.FileHandler;
 import java.io.*;
 import java.util.concurrent.Callable;
-
-import ch.heigvd.dil.utils.FileHandler;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "clean", description = "")

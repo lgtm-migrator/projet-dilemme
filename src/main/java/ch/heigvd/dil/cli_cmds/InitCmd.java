@@ -2,11 +2,10 @@ package ch.heigvd.dil.cli_cmds;
 
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
+import ch.heigvd.dil.utils.FileHandler;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
-
-import ch.heigvd.dil.utils.FileHandler;
 import picocli.CommandLine;
 
 /** Cette classe permet d'initialiser un site. */
@@ -34,10 +33,9 @@ public class InitCmd implements Callable<Integer> {
 
     String siteConfig = new Site.Config("title", "owner", "domain").getJSON();
 
-    try{
+    try {
       FileHandler.write(new File(siteFolder, "config.json"), siteConfig);
-    }
-    catch(IOException e) {
+    } catch (IOException e) {
       System.err.println("Error: Could not create config.json.");
       return 1;
     }
@@ -49,10 +47,9 @@ public class InitCmd implements Callable<Integer> {
             + "\n"
             + "# Your content here";
 
-    try{
+    try {
       FileHandler.write(new File(siteFolder, "index.md"), pageConfig);
-    }
-    catch(IOException e){
+    } catch (IOException e) {
       System.err.println("Error: Could not create index.md.");
       return 1;
     }
