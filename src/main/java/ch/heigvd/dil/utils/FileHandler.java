@@ -15,16 +15,12 @@ public class FileHandler {
      * @param content le contenu du fichier
      * @return true si l'écriture s'est bien passée, false sinon
      */
-    static public boolean write(File file, String content) {
-        try {
-            BufferedWriter bw =
-                    new BufferedWriter(
-                            new FileWriter(file,StandardCharsets.UTF_8));
-            bw.write(content);
-            bw.close();
-        } catch (IOException e) {
-            return false;
-        }
+    static public boolean write(File file, String content) throws IOException {
+        BufferedWriter bw =
+                new BufferedWriter(
+                        new FileWriter(file,StandardCharsets.UTF_8));
+        bw.write(content);
+        bw.close();
         return true;
     }
 
@@ -33,20 +29,16 @@ public class FileHandler {
      *
      * @param file le fichier à lire
      * @return le contenu du fichier
-     * ou null si le fichier n'existe pas
      */
-    static public String read(File file) {
+    static public String read(File file) throws IOException {
         StringBuilder content = new StringBuilder();
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file, StandardCharsets.UTF_8));
 
-            String line;
-            while ((line = br.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            return null;
+        BufferedReader br = new BufferedReader(
+                new FileReader(file, StandardCharsets.UTF_8));
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            content.append(line).append("\n");
         }
 
         return content.toString();

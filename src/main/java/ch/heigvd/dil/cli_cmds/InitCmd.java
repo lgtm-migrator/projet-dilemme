@@ -34,9 +34,10 @@ public class InitCmd implements Callable<Integer> {
 
     String siteConfig = new Site.Config("title", "owner", "domain").getJSON();
 
-    status = FileHandler.write(new File(siteFolder, "config.json"), siteConfig);
-
-    if (!status) {
+    try{
+      FileHandler.write(new File(siteFolder, "config.json"), siteConfig);
+    }
+    catch(IOException e) {
       System.err.println("Error: Could not create config.json.");
       return 1;
     }
@@ -48,9 +49,10 @@ public class InitCmd implements Callable<Integer> {
             + "\n"
             + "# Your content here";
 
-    status = FileHandler.write(new File(siteFolder, "index.md"), pageConfig);
-
-    if (!status) {
+    try{
+      FileHandler.write(new File(siteFolder, "index.md"), pageConfig);
+    }
+    catch(IOException e){
       System.err.println("Error: Could not create index.md.");
       return 1;
     }

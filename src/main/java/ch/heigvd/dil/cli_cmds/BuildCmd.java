@@ -95,7 +95,15 @@ public class BuildCmd implements Callable<Integer> {
         // convertit le fichier Markdown en HTML
         String htmlFileName = f.getName().replace(".md", ".html");
         File htmlFile = new File(path, "build" + folderPath + "/" + htmlFileName);
-        String content = FileHandler.read(f);
+
+        String content;
+        try {
+          content = FileHandler.read(f);
+        }
+        catch (IOException e) {
+          System.err.println("Error: Could not read file '" + f.getName() + "'");
+          return false;
+        }
 
         PageContentSeparator pageContent;
         try{
@@ -111,8 +119,10 @@ public class BuildCmd implements Callable<Integer> {
 
         String htmlContent = MarkdownParser.convertMarkdownToHTML(mdContent);
 
-        status = FileHandler.write(htmlFile, htmlContent);
-        if (!status) {
+        try{
+          FileHandler.write(htmlFile, htmlContent);
+        }
+        catch (IOException e){
           System.err.println("Error: Could not write file " + htmlFile.getName());
           return false;
         }
