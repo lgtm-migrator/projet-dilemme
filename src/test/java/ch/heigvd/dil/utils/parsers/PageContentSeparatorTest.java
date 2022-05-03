@@ -15,6 +15,7 @@ public class PageContentSeparatorTest {
   private JSONObject validConfig = new JSONObject();
   private String validPageStr;
   private Page validPage;
+  private final static String resourcesPath = "src/test/resources/testFiles/";
 
   @Before
   public void genJSONs() {
@@ -28,7 +29,7 @@ public class PageContentSeparatorTest {
 
     try (BufferedReader br =
         new BufferedReader(
-            new FileReader("testFiles/test-page/test-page-valid.md", StandardCharsets.UTF_8))) {
+            new FileReader(resourcesPath + "test-page/test-page-valid.md", StandardCharsets.UTF_8))) {
       StringBuilder buffer = new StringBuilder();
       while (br.ready()) {
         buffer.append(br.readLine());

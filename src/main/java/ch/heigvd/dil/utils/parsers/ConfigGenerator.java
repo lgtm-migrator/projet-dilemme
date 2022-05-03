@@ -2,8 +2,12 @@ package ch.heigvd.dil.utils.parsers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
@@ -48,12 +52,15 @@ public class ConfigGenerator<T> {
 
   private static JSONObject readSchema(String schemaPath) {
     JSONObject out;
-    try (FileInputStream fis = new FileInputStream(schemaPath)) {
-      out = new JSONObject(new JSONTokener(fis));
+    try (InputStream in = ConfigGenerator.class.getResourceAsStream("/" + schemaPath)) {
+      if (in != null) {
+        out = new JSONObject(new JSONTokener(in));
+      } else {
+        throw new RuntimeException("Application resource not found : JSON schema not found");
+      }
     } catch (IOException e) {
       // Cette erreur n'est pas dépendante de l'utilisateur et ne devrait pas se produire,
       // sauf si on fait des erreurs de programmation.
-      assert (true);
       throw new RuntimeException(e.getMessage());
     }
     return out;
