@@ -1,6 +1,5 @@
 package ch.heigvd.dil.data_structures;
 
-import org.everit.json.schema.ValidationException;
 import static org.junit.Assert.assertFalse;
 
 import java.io.BufferedReader;
@@ -8,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import org.everit.json.schema.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +16,6 @@ public class PageTest {
   private static final String resourcesPath = "src/test/resources/testFiles/";
   private String validPageStr;
   private Site.Config siteConf;
-
 
   @Test
   public void createPageFromValidFileShouldNotThrow() {

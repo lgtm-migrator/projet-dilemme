@@ -1,9 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
 import ch.heigvd.dil.data_structures.Page;
-import org.everit.json.schema.ValidationException;
-
 import java.text.ParseException;
+import org.everit.json.schema.ValidationException;
 
 /**
  * Permet de lire un fichier représentant une page et de parser la partie contenu et la partie

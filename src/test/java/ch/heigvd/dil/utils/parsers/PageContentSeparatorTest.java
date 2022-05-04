@@ -6,7 +6,6 @@ import ch.heigvd.dil.data_structures.Page;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-
 import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.junit.Before;
