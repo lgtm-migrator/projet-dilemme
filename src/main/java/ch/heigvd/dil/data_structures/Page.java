@@ -4,7 +4,6 @@ import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-
 import java.text.ParseException;
 import java.time.LocalDate;
 
