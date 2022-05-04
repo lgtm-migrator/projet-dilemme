@@ -41,11 +41,10 @@ public class ConfigGeneratorTest {
     String schemaPath = "schema/site-config-schema.json";
     try {
       ConfigGenerator<Site.Config> generator =
-              new ConfigGenerator<>(missingDomain.toString(), schemaPath, Site.Config.class);
+          new ConfigGenerator<>(missingDomain.toString(), schemaPath, Site.Config.class);
     } catch (ValidationException e) {
       thrown = true;
     }
     assertTrue(thrown);
   }
-
 }
