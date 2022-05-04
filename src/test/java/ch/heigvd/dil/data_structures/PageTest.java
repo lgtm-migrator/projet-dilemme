@@ -1,17 +1,15 @@
 package ch.heigvd.dil.data_structures;
 
 import org.everit.json.schema.ValidationException;
-import org.json.JSONObject;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-
-import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
 
 public class PageTest {
 
@@ -39,9 +37,9 @@ public class PageTest {
   @Before
   public void readTestFiles() {
     try (BufferedReader br =
-                 new BufferedReader(
-                         new FileReader(
-                                 resourcesPath + "test-page/test-page-valid.md", StandardCharsets.UTF_8))) {
+        new BufferedReader(
+            new FileReader(
+                resourcesPath + "test-page/test-page-valid.md", StandardCharsets.UTF_8))) {
       StringBuilder buffer = new StringBuilder();
       while (br.ready()) {
         buffer.append(br.readLine());
@@ -52,8 +50,4 @@ public class PageTest {
       throw new RuntimeException();
     }
   }
-
-
-
-
 }
