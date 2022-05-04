@@ -4,6 +4,7 @@ import ch.heigvd.dil.utils.FileHandler;
 import ch.heigvd.dil.utils.parsers.MarkdownParser;
 import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import java.io.*;
+import java.text.ParseException;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
@@ -49,12 +50,18 @@ public class BuildCmd implements Callable<Integer> {
         return 1;
       }
     }
-    buildDir.mkdir();
+
+    status = buildDir.mkdir();
+    if (!status) {
+      System.err.println("Error: Could not create build folder.");
+      return 1;
+    }
 
     // Convertit les fichiers Markdown en HTML
-    status = recursiveExploration("");
-    if (!status) {
-      System.err.println("Error: Could not build site.");
+    try {
+      recursiveExploration("");
+    } catch (Exception e) {
+      System.err.println("Error: Could not build site : " + e.getMessage());
       FileHandler.delete(buildDir);
       return 1;
     }
@@ -67,61 +74,44 @@ public class BuildCmd implements Callable<Integer> {
    * Explore les fichiers Markdown du dossier courant et les convertit en HTML dans le dossier build
    *
    * @param folderPath le chemin du dossier courant
-   * @return true si tout s'est bien passé, false sinon
    */
-  private boolean recursiveExploration(String folderPath) {
+  private void recursiveExploration(String folderPath) throws IOException, ParseException {
     boolean status;
 
-    for (File f : new File(path, folderPath).listFiles()) {
+    File[] files = new File(path, folderPath).listFiles();
+    if (files == null) {
+      throw new IOException("Could not list files.");
+    }
+
+    for (File f : files) {
       if (f.isDirectory()) {
         if (f.getName().equals("build")) continue;
         // crée un sous-dossier dans build
         String subFolder = folderPath + "/" + f.getName();
         status = new File(path, "build" + subFolder).mkdir();
         if (!status) {
-          System.err.println("Error: Could not create folder '" + subFolder + "'");
-          return false;
+          throw new IOException("Error: Could not create folder '" + subFolder + "'");
         }
 
         // explore le sous-dossier
-        status = recursiveExploration(folderPath + "/" + f.getName());
-        if (!status) {
-          return false;
-        }
+        recursiveExploration(folderPath + "/" + f.getName());
       } else if (f.getName().endsWith(".md")) {
         // convertit le fichier Markdown en HTML
         String htmlFileName = f.getName().replace(".md", ".html");
         File htmlFile = new File(path, "build" + folderPath + "/" + htmlFileName);
 
-        String content;
-        try {
-          content = FileHandler.read(f);
-        } catch (IOException e) {
-          System.err.println("Error: Could not read file '" + f.getName() + "'");
-          return false;
-        }
+        String content = FileHandler.read(f);
 
-        PageContentSeparator pageContent;
-        try {
-          pageContent = new PageContentSeparator(content);
-        } catch (Exception e) {
-          System.err.println("Error: Could not parse file '" + f.getName() + "'");
-          return false;
-        }
+        PageContentSeparator pageContent = new PageContentSeparator(content);
+
         String mdContent = pageContent.getContent();
 
         // TODO: lire les configs et les utiliser
 
         String htmlContent = MarkdownParser.convertMarkdownToHTML(mdContent);
 
-        try {
-          FileHandler.write(htmlFile, htmlContent);
-        } catch (IOException e) {
-          System.err.println("Error: Could not write file " + htmlFile.getName());
-          return false;
-        }
+        FileHandler.write(htmlFile, htmlContent);
       }
     }
-    return true;
   }
 }
