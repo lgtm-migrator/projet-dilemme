@@ -3,12 +3,11 @@ package ch.heigvd.dil.utils.parsers;
 import static org.junit.Assert.*;
 
 import ch.heigvd.dil.data_structures.Page;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +15,21 @@ import org.junit.Test;
 public class PageContentSeparatorTest {
 
   private final JSONObject validConfig = new JSONObject();
+  private final JSONObject invalidConfig = new JSONObject();
+  private final JSONObject incompleteConfig = new JSONObject();
 
   @Before
   public void genJSONs() {
     validConfig.put("title", "titre d'exemple");
     validConfig.put("author", "titre d'exemple");
     validConfig.put("date", "2022-10-12");
+
+    invalidConfig.put("title", "titre d'exemple");
+    invalidConfig.put("author", 1);
+    invalidConfig.put("date", "2022-10-12");
+
+    incompleteConfig.put("title", "titre d'exemple");
+    incompleteConfig.put("author", "Jeanne");
   }
 
   @Test
@@ -54,7 +62,33 @@ public class PageContentSeparatorTest {
       assertEquals(
           config.getDate(),
           LocalDate.parse("2021-03-10", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  public void testInvalidPageHeaderShouldFail() {
+    String md = invalidConfig + "---\n" + "Ceci est le contenu de l'article";
+    try {
+      new PageContentSeparator(md);
+      fail();
+    } catch (ValidationException e) {
+      assertTrue(true);
     } catch (ParseException e) {
+      fail();
+    }
+  }
+
+  @Test
+  public void testIncompletePageHeaderShouldFail() {
+    String md = incompleteConfig + "---\n" + "Ceci est le contenu de l'article";
+    try {
+      new PageContentSeparator(md);
+      fail();
+    } catch (ValidationException e) {
+      assertTrue(true);
+    } catch (Exception e) {
       fail();
     }
   }
