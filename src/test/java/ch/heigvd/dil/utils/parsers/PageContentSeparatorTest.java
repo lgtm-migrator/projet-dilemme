@@ -6,17 +6,16 @@ import ch.heigvd.dil.data_structures.Page;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
-import org.everit.json.schema.ValidationException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
 public class PageContentSeparatorTest {
 
-  private JSONObject validConfig = new JSONObject();
-  private String validPageStr;
-  private Page validPage;
-  private static final String resourcesPath = "src/test/resources/testFiles/";
+  private final JSONObject validConfig = new JSONObject();
 
   @Before
   public void genJSONs() {
@@ -25,35 +24,38 @@ public class PageContentSeparatorTest {
     validConfig.put("date", "2022-10-12");
   }
 
-  @Before
-  public void readTestFiles() {
-
-    try (BufferedReader br =
-        new BufferedReader(
-            new FileReader(
-                resourcesPath + "test-page/test-page-valid.md", StandardCharsets.UTF_8))) {
-      StringBuilder buffer = new StringBuilder();
-      while (br.ready()) {
-        buffer.append(br.readLine());
-      }
-      validPageStr = buffer.toString();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException();
-    }
-  }
-
   @Test
-  public void parseValidPageFileShouldNotThrowException() {
-    boolean thrown = false;
+  public void testValidPageFileShouldReturnCorrectContentAndConfig() {
+    String md =
+        "{\n"
+            + "    \"title\" : \"title example\",\n"
+            + "    \"author\" : \"Eliott Chytil\",\n"
+            + "    \"date\" : \"2021-03-10\"\n"
+            + "}\n"
+            + "---\n"
+            + "# Titre au format md\n"
+            + "\n## sous-titre\n"
+            + "\nCeci est le contenu de l'article\n"
+            + "\n## sous-titre 2\n"
+            + "\nCeci ...";
     try {
-      PageContentSeparator separator = new PageContentSeparator(validPageStr);
-      // validPage = new Page(separator.getConfig(), separator.getContent())
-      separator.getContent();
-      separator.getConfig();
-    } catch (ParseException | ValidationException e) {
-      thrown = true;
+      PageContentSeparator separator = new PageContentSeparator(md);
+      String content = separator.getContent();
+      assertEquals(
+          content,
+          "\n# Titre au format md\n"
+              + "\n## sous-titre\n"
+              + "\nCeci est le contenu de l'article\n"
+              + "\n## sous-titre 2\n"
+              + "\nCeci ...");
+      Page.Config config = separator.getConfig();
+      assertEquals(config.getTitle(), "title example");
+      assertEquals(config.getAuthor(), "Eliott Chytil");
+      assertEquals(
+          config.getDate(),
+          LocalDate.parse("2021-03-10", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    } catch (ParseException e) {
+      fail();
     }
-    assertFalse(thrown);
   }
 }
