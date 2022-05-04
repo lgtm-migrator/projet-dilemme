@@ -18,7 +18,7 @@ public class ConfigGeneratorTest {
     missingDomain = new JSONObject();
     missingDomain.put("title", "titre d'exemple");
     missingDomain.put("owner", "Jean Dupont");
-    validConfig = new JSONObject(missingDomain);
+    validConfig = new JSONObject(missingDomain.toString());
     validConfig.put("domain", "example.ch");
   }
 
