@@ -1,6 +1,7 @@
 package ch.heigvd.dil.data_structures;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -19,13 +20,11 @@ public class PageTest {
 
   @Test
   public void createPageFromValidFileShouldNotThrow() {
-    boolean thrown = false;
     try {
       new Page(validPageStr, siteConf);
-    } catch (ParseException | ValidationException e) {
-      thrown = true;
+    } catch (Exception e) {
+      fail();
     }
-    assertFalse(thrown);
   }
 
   @Before
@@ -44,9 +43,8 @@ public class PageTest {
         buffer.append(br.readLine());
       }
       validPageStr = buffer.toString();
-    } catch (IOException e) {
-      System.out.println(e.getMessage());
-      throw new RuntimeException();
+    } catch (Exception e) {
+      fail();
     }
   }
 }
