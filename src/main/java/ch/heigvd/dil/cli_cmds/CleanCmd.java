@@ -1,5 +1,6 @@
 package ch.heigvd.dil.cli_cmds;
 
+import ch.heigvd.dil.utils.FileHandler;
 import java.io.*;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
@@ -21,7 +22,7 @@ public class CleanCmd implements Callable<Integer> {
       return 1;
     }
 
-    boolean status = file.delete();
+    boolean status = FileHandler.delete(file);
     if (!status) {
       System.err.println("Error: Could not delete the build directory");
       return 1;

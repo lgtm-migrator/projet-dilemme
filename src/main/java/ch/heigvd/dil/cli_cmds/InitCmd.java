@@ -2,14 +2,14 @@ package ch.heigvd.dil.cli_cmds;
 
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
+import ch.heigvd.dil.utils.FileHandler;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
 /** Cette classe permet d'initialiser un site. */
-@CommandLine.Command(name = "init", description = "")
+@CommandLine.Command(name = "init", description = "Initialize a site")
 public class InitCmd implements Callable<Integer> {
   // paramètre indiquant le site le chemin du site à initialiser
   @CommandLine.Parameters(description = "The site path to clean")
@@ -33,15 +33,12 @@ public class InitCmd implements Callable<Integer> {
 
     String siteConfig = new Site.Config("title", "owner", "domain").getJSON();
 
-    status = createFile(new File(siteFolder, "config.json"), siteConfig);
-
-    if (!status) {
+    try {
+      FileHandler.write(new File(siteFolder, "config.json"), siteConfig);
+    } catch (IOException e) {
       System.err.println("Error: Could not create config.json.");
       return 1;
     }
-
-    File contentFolder = new File(path + "/content");
-    contentFolder.mkdirs();
 
     String pageConfig =
         new Page.Config("title", "author", LocalDate.now()).getJSON()
@@ -50,33 +47,14 @@ public class InitCmd implements Callable<Integer> {
             + "\n"
             + "# Your content here";
 
-    status = createFile(new File(contentFolder, "page.md"), pageConfig);
-
-    if (!status) {
-      System.err.println("Error: Could not create page.md.");
+    try {
+      FileHandler.write(new File(siteFolder, "index.md"), pageConfig);
+    } catch (IOException e) {
+      System.err.println("Error: Could not create index.md.");
       return 1;
     }
 
     System.out.println("Site initialized.");
     return 0;
-  }
-
-  /**
-   * Crée un fichier à partir d'un contenu.
-   *
-   * @param file le fichier à créer
-   * @param content le contenu du fichier
-   * @return true si le fichier a été créé, false sinon
-   */
-  private boolean createFile(File file, String content) {
-    try {
-      OutputStreamWriter osw =
-          new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8);
-      osw.write(content);
-      osw.close();
-    } catch (IOException e) {
-      return false;
-    }
-    return true;
   }
 }
