@@ -1,14 +1,10 @@
 package ch.heigvd.dil.data_structures;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import org.everit.json.schema.ValidationException;
 import org.junit.Before;
 import org.junit.Test;
 

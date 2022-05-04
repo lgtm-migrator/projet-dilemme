@@ -1,8 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 public class MarkdownParserTest {
   @Test
@@ -25,6 +25,7 @@ public class MarkdownParserTest {
             + "<p><em>italic</em>\n"
             + "<strong>bold</strong>\n"
             + "<em><a href=\"http://www.google.com\">link</a></em>\n"
-            + "<em><a href=\"http://www.google.com\" title=\"Google\">link with title</a></em></p>\n");
+            + "<em><a href=\"http://www.google.com\" title=\"Google\">link with"
+            + " title</a></em></p>\n");
   }
 }
