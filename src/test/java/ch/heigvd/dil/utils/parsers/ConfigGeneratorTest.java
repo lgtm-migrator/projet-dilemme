@@ -1,6 +1,7 @@
 package ch.heigvd.dil.utils.parsers;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import ch.heigvd.dil.data_structures.Site;
 import org.everit.json.schema.ValidationException;
@@ -9,12 +10,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ConfigGeneratorTest {
-  private JSONObject validConfig = new JSONObject();
+  private JSONObject validConfig;
+  private JSONObject missingDomain;
 
   @Before
   public void genJSONs() {
-    validConfig.put("title", "titre d'exemple");
-    validConfig.put("owner", "Jean Dupont");
+    missingDomain = new JSONObject();
+    missingDomain.put("title", "titre d'exemple");
+    missingDomain.put("owner", "Jean Dupont");
+    validConfig = new JSONObject(missingDomain);
     validConfig.put("domain", "example.ch");
   }
 
@@ -30,4 +34,18 @@ public class ConfigGeneratorTest {
     }
     assertFalse(thrown);
   }
+
+  @Test
+  public void parseInvalidConfigShouldThrowException() {
+    boolean thrown = false;
+    String schemaPath = "schema/site-config-schema.json";
+    try {
+      ConfigGenerator<Site.Config> generator =
+              new ConfigGenerator<>(missingDomain.toString(), schemaPath, Site.Config.class);
+    } catch (ValidationException e) {
+      thrown = true;
+    }
+    assertTrue(thrown);
+  }
+
 }
