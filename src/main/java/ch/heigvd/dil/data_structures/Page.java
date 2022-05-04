@@ -1,8 +1,10 @@
 package ch.heigvd.dil.data_structures;
 
+import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import java.text.ParseException;
 import java.time.LocalDate;
 
 /** Représente une page. */
@@ -20,6 +22,13 @@ public class Page {
     this.pageConfig = pageConfig;
     this.siteConfig = siteConfig;
     this.markdown = markdown;
+  }
+
+  public Page(String fileContent, Site.Config siteConfig) throws ParseException {
+    PageContentSeparator sep = new PageContentSeparator(fileContent);
+    pageConfig = sep.getConfig();
+    markdown = sep.getContent();
+    this.siteConfig = siteConfig;
   }
 
   /**
