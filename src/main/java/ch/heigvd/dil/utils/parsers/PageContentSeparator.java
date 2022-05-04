@@ -1,6 +1,8 @@
 package ch.heigvd.dil.utils.parsers;
 
 import ch.heigvd.dil.data_structures.Page;
+import org.everit.json.schema.ValidationException;
+
 import java.text.ParseException;
 
 /**
@@ -19,7 +21,7 @@ public class PageContentSeparator {
    * @param file String contenant la page non parsée
    * @throws ParseException si la page ne contient pas de séparateur
    */
-  public PageContentSeparator(String file) throws ParseException {
+  public PageContentSeparator(String file) throws ParseException, ValidationException {
     int index = file.indexOf(SEP);
     if (index == -1) {
       throw new ParseException("Invalid page format", 0);
@@ -46,7 +48,7 @@ public class PageContentSeparator {
     return config;
   }
 
-  private static Page.Config genPageConfig(String configStr) {
+  private static Page.Config genPageConfig(String configStr) throws ValidationException {
     String schema = "schema/page-config-schema.json";
     ConfigGenerator<Page.Config> validator =
         new ConfigGenerator<>(configStr, schema, Page.Config.class);

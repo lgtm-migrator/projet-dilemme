@@ -1,5 +1,6 @@
 package ch.heigvd.dil.data_structures;
 
+import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class PageTest {
     boolean thrown = false;
     try {
       new Page(validPageStr, siteConf);
-    } catch (ParseException e) {
+    } catch (ParseException | ValidationException e) {
       thrown = true;
     }
     assertFalse(thrown);

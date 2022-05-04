@@ -6,6 +6,8 @@ import ch.heigvd.dil.data_structures.Page;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+
+import org.everit.json.schema.ValidationException;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +52,7 @@ public class PageContentSeparatorTest {
       // validPage = new Page(separator.getConfig(), separator.getContent())
       separator.getContent();
       separator.getConfig();
-    } catch (ParseException e) {
+    } catch (ParseException | ValidationException e) {
       thrown = true;
     }
     assertFalse(thrown);
