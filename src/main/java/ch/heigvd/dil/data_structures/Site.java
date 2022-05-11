@@ -1,27 +1,26 @@
 package ch.heigvd.dil.data_structures;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.heigvd.dil.utils.parsers.ConfigGenerator;
-import org.apache.commons.lang3.NotImplementedException;
 
 /** Représente un site. */
 public class Site {
-  private Site.Config config;
-  private final String path;
+  private final Site.Config config;
+  private final Path path;
   private ArrayList<Page> pages;
 
   /**
    * @param config La configuration du site
    * @param path Le chemin source du site
    */
-  public Site(Site.Config config, String path) {
+  public Site(Config config, Path path) {
     this.config = config;
     this.path = path;
   }
 
-  public Site(String configFileContent, String path) {
+  public Site(String configFileContent, Path path) {
     this.path = path;
     String schema = "schema/site-config-schema.json";
     ConfigGenerator<Config> cg = new ConfigGenerator<>(configFileContent, schema, Config.class);
@@ -34,6 +33,7 @@ public class Site {
   public ArrayList<Page> retrievePages() {
     return pages;
   }
+
 
   public String getTitle() {
     return config.getTitle();
