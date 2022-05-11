@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-
 import org.junit.Before;
 import org.junit.Test;
 
