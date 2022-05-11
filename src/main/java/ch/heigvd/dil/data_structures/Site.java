@@ -1,9 +1,8 @@
 package ch.heigvd.dil.data_structures;
 
+import ch.heigvd.dil.utils.parsers.ConfigGenerator;
 import java.nio.file.Path;
 import java.util.ArrayList;
-
-import ch.heigvd.dil.utils.parsers.ConfigGenerator;
 
 /** Représente un site. */
 public class Site {
@@ -41,7 +40,6 @@ public class Site {
   public String getTitle() {
     return config.getTitle();
   }
-
 
   public String getOwner() {
     return config.getOwner();

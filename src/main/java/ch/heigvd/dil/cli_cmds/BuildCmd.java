@@ -4,14 +4,11 @@ import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
 import ch.heigvd.dil.utils.FileHandler;
 import ch.heigvd.dil.utils.parsers.MarkdownParser;
-import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
-
 import org.everit.json.schema.ValidationException;
 import picocli.CommandLine;
 
@@ -24,7 +21,6 @@ public class BuildCmd implements Callable<Integer> {
   // paramètre indiquant le site le chemin du site à initialiser
   @CommandLine.Parameters(description = "The site path to clean")
   String path;
-
 
   private Site site;
 
@@ -56,8 +52,6 @@ public class BuildCmd implements Callable<Integer> {
       System.err.println("Error: The site has to be initialized first.");
       return 1;
     }
-
-
 
     // Crée le dossier build
     File buildDir = new File(path, "build");
@@ -98,7 +92,6 @@ public class BuildCmd implements Callable<Integer> {
       } catch (IOException e) {
         System.err.println("Error while writing file " + p.getPath().toString());
       }
-
     }
 
     System.out.println("Site built.");
@@ -117,7 +110,6 @@ public class BuildCmd implements Callable<Integer> {
     if (files == null) {
       throw new IOException("Could not list files.");
     }
-
 
     for (File f : files) {
       if (f.isDirectory()) {
@@ -139,11 +131,14 @@ public class BuildCmd implements Callable<Integer> {
           Page page = new Page(f.toString(), path);
           site.addPage(page);
         } catch (ParseException e) {
-          System.err.println("Warning : Bad page format. " + f.getName() + " not generated. Continuing...");
+          System.err.println(
+              "Warning : Bad page format. " + f.getName() + " not generated. Continuing...");
         } catch (ValidationException e) {
-          System.err.println("Warning : Bad configuration in page " + f.getName() + ". Page not generated. Continuing...");
+          System.err.println(
+              "Warning : Bad configuration in page "
+                  + f.getName()
+                  + ". Page not generated. Continuing...");
         }
-
       }
     }
   }
