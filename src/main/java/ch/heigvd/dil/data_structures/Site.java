@@ -52,6 +52,10 @@ public class Site {
     return config.getJSON();
   }
 
+  public Path getPath() {
+    return path;
+  }
+
   /** Représentes la configuration d'un site */
   public static class Config {
     private final String title;
