@@ -1,6 +1,8 @@
 package ch.heigvd.dil.data_structures;
 
 import ch.heigvd.dil.utils.parsers.ConfigGenerator;
+import org.everit.json.schema.ValidationException;
+
 import java.nio.file.Path;
 import java.util.ArrayList;
 
@@ -19,7 +21,7 @@ public class Site {
     this.path = path;
   }
 
-  public Site(String configFileContent, Path path) {
+  public Site(String configFileContent, Path path) throws ValidationException {
     this.path = path;
     String schema = "schema/site-config-schema.json";
     ConfigGenerator<Config> cg = new ConfigGenerator<>(configFileContent, schema, Config.class);
@@ -59,9 +61,14 @@ public class Site {
 
   /** Représentes la configuration d'un site */
   public static class Config {
-    private final String title;
-    private final String owner;
-    private final String domain;
+    private String title;
+    private String owner;
+    private String domain;
+
+    /**
+     * Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON
+     */
+    public Config() {}
 
     /**
      * @param title Le titre du site
