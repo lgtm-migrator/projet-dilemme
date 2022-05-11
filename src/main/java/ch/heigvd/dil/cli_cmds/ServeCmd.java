@@ -1,12 +1,11 @@
 package ch.heigvd.dil.cli_cmds;
 
-import java.io.File;
-import java.util.concurrent.Callable;
-
 import ch.heigvd.dil.Main;
-import picocli.CommandLine;
 import java.awt.Desktop;
+import java.io.File;
 import java.net.URI;
+import java.util.concurrent.Callable;
+import picocli.CommandLine;
 
 @CommandLine.Command(name = "serve", description = "")
 public class ServeCmd implements Callable<Integer> {
