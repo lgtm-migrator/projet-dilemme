@@ -9,7 +9,7 @@ import ch.heigvd.dil.utils.parsers.ConfigGenerator;
 public class Site {
   private final Site.Config config;
   private final Path path;
-  private ArrayList<Page> pages;
+  private final ArrayList<Page> pages = new ArrayList<>();
 
   /**
    * @param config La configuration du site
@@ -34,6 +34,9 @@ public class Site {
     return pages;
   }
 
+  public void addPage(Page page) {
+    pages.add(page);
+  }
 
   public String getTitle() {
     return config.getTitle();
