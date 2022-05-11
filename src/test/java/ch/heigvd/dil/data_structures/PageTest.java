@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import org.everit.json.schema.ValidationException;
 import org.junit.Before;
@@ -21,7 +23,7 @@ public class PageTest {
   public void createPageFromValidFileShouldNotThrow() {
     boolean thrown = false;
     try {
-      new Page(validPageStr, siteConf);
+      new Page(validPageStr, Paths.get(""));
     } catch (ParseException | ValidationException e) {
       thrown = true;
     }
