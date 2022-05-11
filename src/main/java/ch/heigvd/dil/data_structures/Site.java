@@ -1,12 +1,16 @@
 package ch.heigvd.dil.data_structures;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import ch.heigvd.dil.utils.parsers.ConfigGenerator;
 import org.apache.commons.lang3.NotImplementedException;
 
 /** Représente un site. */
 public class Site {
   private Site.Config config;
   private final String path;
+  private ArrayList<Page> pages;
 
   /**
    * @param config La configuration du site
@@ -17,11 +21,35 @@ public class Site {
     this.path = path;
   }
 
+  public Site(String configFileContent, String path) {
+    this.path = path;
+    String schema = "schema/site-config-schema.json";
+    ConfigGenerator<Config> cg = new ConfigGenerator<>(configFileContent, schema, Config.class);
+    config = cg.getConfigObject();
+  }
+
   /**
    * @return Les pages contenues dans le site
    */
-  public List<Page> retrievePages() {
-    throw new NotImplementedException("You must implement this method");
+  public ArrayList<Page> retrievePages() {
+    return pages;
+  }
+
+  public String getTitle() {
+    return config.getTitle();
+  }
+
+
+  public String getOwner() {
+    return config.getOwner();
+  }
+
+  public String getDomain() {
+    return config.getDomain();
+  }
+
+  public String configToJSON() {
+    return config.getJSON();
   }
 
   /** Représentes la configuration d'un site */
@@ -44,21 +72,21 @@ public class Site {
     /**
      * @return Le titre du site
      */
-    public String getTitle() {
+    private String getTitle() {
       return title;
     }
 
     /**
      * @return Le propriétaire du site
      */
-    public String getOwner() {
+    private String getOwner() {
       return owner;
     }
 
     /**
      * @return Le domaine du site
      */
-    public String getDomain() {
+    private String getDomain() {
       return domain;
     }
 
