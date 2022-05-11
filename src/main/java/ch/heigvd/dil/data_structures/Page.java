@@ -4,6 +4,7 @@ import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import org.everit.json.schema.ValidationException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +29,7 @@ public class Page {
     path = Paths.get("");
   }
 
-  public Page(String fileContent, Path path) throws ParseException {
+  public Page(String fileContent, Path path) throws ParseException, ValidationException {
     PageContentSeparator sep = new PageContentSeparator(fileContent);
     pageConfig = sep.getConfig();
     markdown = sep.getContent();
