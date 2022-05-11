@@ -4,12 +4,11 @@ import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import org.everit.json.schema.ValidationException;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
+import org.everit.json.schema.ValidationException;
 
 /** Représente une page. */
 public class Page {
@@ -23,7 +22,7 @@ public class Page {
    *
    * @param markdown Contenu markdown dans le corps de la page.
    */
-  public Page (Config pageConfig, String markdown) {
+  public Page(Config pageConfig, String markdown) {
     this.pageConfig = pageConfig;
     this.markdown = markdown;
     path = Paths.get("");
