@@ -1,6 +1,7 @@
 package ch.heigvd.dil.data_structures;
 
 import ch.heigvd.dil.utils.parsers.ConfigGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.everit.json.schema.ValidationException;
 
 import java.nio.file.Path;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 
 /** Représente un site. */
 public class Site {
-  private final Site.Config config;
+  private Site.Config config;
   private final Path path;
   private final ArrayList<Page> pages = new ArrayList<>();
 
@@ -16,7 +17,7 @@ public class Site {
    * @param config La configuration du site
    * @param path Le chemin source du site
    */
-  public Site(Config config, Path path) {
+  public Site(Site.Config config, Path path) {
     this.config = config;
     this.path = path;
   }
@@ -24,7 +25,7 @@ public class Site {
   public Site(String configFileContent, Path path) throws ValidationException {
     this.path = path;
     String schema = "schema/site-config-schema.json";
-    ConfigGenerator<Config> cg = new ConfigGenerator<>(configFileContent, schema, Config.class);
+    ConfigGenerator<Site.Config> cg = new ConfigGenerator<>(configFileContent, schema, Site.Config.class);
     config = cg.getConfigObject();
   }
 
@@ -61,14 +62,29 @@ public class Site {
 
   /** Représentes la configuration d'un site */
   public static class Config {
-    private String title;
-    private String owner;
-    private String domain;
 
     /**
      * Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON
      */
     public Config() {}
+
+    public void setOwner (String owner) {
+      this.owner = owner;
+    }
+
+    public void setDomain (String domain) {
+      this.domain = domain;
+    }
+
+    public void setTitle (String title) {
+      this.title = title;
+    }
+
+    private String owner;
+    private String domain;
+    private String title;
+
+
 
     /**
      * @param title Le titre du site
