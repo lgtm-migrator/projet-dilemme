@@ -152,9 +152,7 @@ public class BuildCmd implements Callable<Integer> {
               "Error while reading file " + f.getName() + ". Page not generated. Continuing...");
         }
       } else if (!f.getName().equals("config.json")) { // les autres fichiers
-        Files.copy(f.toPath(),
-                Paths.get(path,"build" + folderPath + "/" + f.getName()));
-
+        Files.copy(f.toPath(), Paths.get(path, "build" + folderPath + "/" + f.getName()));
       }
     }
   }
