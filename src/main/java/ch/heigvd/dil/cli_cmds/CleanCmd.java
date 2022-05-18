@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "clean", description = "")
+@CommandLine.Command(name = "clean", description = "Remove the built site")
 public class CleanCmd implements Callable<Integer> {
   // paramètre indiquant le site à nettoyer
   @CommandLine.Parameters(description = "The site path to clean")

@@ -12,7 +12,7 @@ import picocli.CommandLine;
 @CommandLine.Command(name = "init", description = "Initialize a site")
 public class InitCmd implements Callable<Integer> {
   // paramètre indiquant le site le chemin du site à initialiser
-  @CommandLine.Parameters(description = "The site path to clean")
+  @CommandLine.Parameters(description = "The path where the site will be initialized")
   String path;
 
   @Override
