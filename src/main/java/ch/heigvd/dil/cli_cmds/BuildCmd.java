@@ -70,7 +70,15 @@ public class BuildCmd implements Callable<Integer> {
     }
 
     // Création de la classe Site
-    site = new Site(configFile.toString(), Paths.get(configFile.getPath() + "/build"));
+    try{
+      site = new Site(FileHandler.read(configFile), Paths.get(buildDir.getPath()));
+    } catch (IOException e) {
+      System.err.println("Cannot read config file. Aborting...");
+      return 1;
+    } catch (ValidationException e) {
+      System.err.println(e.getViolatedSchema());
+      return 1;
+    }
 
     // Convertit les fichiers Markdown en HTML
     try {
@@ -83,7 +91,7 @@ public class BuildCmd implements Callable<Integer> {
 
     for (Page p : site.retrievePages()) {
       // convertit le fichier Markdown en HTML
-      File htmlFile = new File(p.getPath().toString());
+      File htmlFile = new File(path + "/" + p.getPath().toString());
 
       String htmlContent = MarkdownParser.convertMarkdownToHTML(p.getMarkdown());
 
@@ -128,7 +136,7 @@ public class BuildCmd implements Callable<Integer> {
         Path path = Paths.get("build" + folderPath + "/" + htmlFileName);
 
         try {
-          Page page = new Page(f.toString(), path);
+          Page page = new Page(FileHandler.read(f), path);
           site.addPage(page);
         } catch (ParseException e) {
           System.err.println(
@@ -138,6 +146,8 @@ public class BuildCmd implements Callable<Integer> {
               "Warning : Bad configuration in page "
                   + f.getName()
                   + ". Page not generated. Continuing...");
+        } catch (IOException e) {
+          System.err.println("Error while reading file " + f.getName() + ". Page not generated. Continuing...");
         }
       }
     }
