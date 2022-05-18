@@ -151,7 +151,7 @@ public class BuildCmd implements Callable<Integer> {
           System.err.println(
               "Error while reading file " + f.getName() + ". Page not generated. Continuing...");
         }
-      } else if (!f.getName().endsWith(".json")) { // les fichiers médias
+      } else if (!f.getName().equals("config.json")) { // les autres fichiers
         Files.copy(f.toPath(),
                 Paths.get(path,"build" + folderPath + "/" + f.getName()));
 
