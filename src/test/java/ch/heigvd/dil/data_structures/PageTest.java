@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class PageTest {
   @Test
   public void createPageFromValidFileShouldNotThrow() {
     try {
-      new Page(validPageStr, siteConf);
+      new Page(validPageStr, Paths.get(""));
     } catch (Exception e) {
       fail();
     }

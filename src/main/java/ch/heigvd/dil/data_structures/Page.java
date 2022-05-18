@@ -4,31 +4,35 @@ import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.time.LocalDate;
+import org.everit.json.schema.ValidationException;
 
 /** Représente une page. */
 public class Page {
+  // TODO: retirer la propriété siteConfig
   private final Page.Config pageConfig;
-  private final Site.Config siteConfig;
   private final String markdown;
+  private final Path path;
 
   /**
    * Construit une page.
    *
    * @param markdown Contenu markdown dans le corps de la page.
    */
-  public Page(Page.Config pageConfig, Site.Config siteConfig, String markdown) {
+  public Page(Config pageConfig, String markdown) {
     this.pageConfig = pageConfig;
-    this.siteConfig = siteConfig;
     this.markdown = markdown;
+    path = Paths.get("");
   }
 
-  public Page(String fileContent, Site.Config siteConfig) throws ParseException {
+  public Page(String fileContent, Path path) throws ParseException, ValidationException {
     PageContentSeparator sep = new PageContentSeparator(fileContent);
     pageConfig = sep.getConfig();
     markdown = sep.getContent();
-    this.siteConfig = siteConfig;
+    this.path = path;
   }
 
   /**
@@ -38,11 +42,8 @@ public class Page {
     return pageConfig;
   }
 
-  /**
-   * @return La configuration du site.
-   */
-  public Site.Config getSiteConfig() {
-    return siteConfig;
+  public Path getPath() {
+    return path;
   }
 
   /**

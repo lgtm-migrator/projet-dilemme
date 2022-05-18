@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Site configuration",
   "description": "Site configuration",
-  "required": [ "title", "owner", "domain"],
+  "required": ["title", "owner", "domain"],
   "type": "object",
   "properties": {
     "title": {

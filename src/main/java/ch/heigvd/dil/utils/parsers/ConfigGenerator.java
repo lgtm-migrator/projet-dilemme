@@ -40,7 +40,8 @@ public class ConfigGenerator<T> {
       out = objectMapper.readValue(validConfig.toString(), configType);
     } catch (JsonProcessingException e) {
       // Cette erreur n'est pas dépendante de l'utilisateur et ne devrait pas se produire,
-      // sauf si on fait des erreurs de programmation.
+      // sauf si on fait des erreurs de programmation
+      System.err.println(e);
       throw new RuntimeException(e.getMessage());
     }
     return out;

@@ -1,34 +1,85 @@
 package ch.heigvd.dil.data_structures;
 
-import java.util.List;
-import org.apache.commons.lang3.NotImplementedException;
+import ch.heigvd.dil.utils.parsers.ConfigGenerator;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import org.everit.json.schema.ValidationException;
 
 /** Représente un site. */
 public class Site {
   private Site.Config config;
-  private final String path;
+  private final Path path;
+  private final ArrayList<Page> pages = new ArrayList<>();
 
   /**
    * @param config La configuration du site
    * @param path Le chemin source du site
    */
-  public Site(Site.Config config, String path) {
+  public Site(Site.Config config, Path path) {
     this.config = config;
     this.path = path;
+  }
+
+  public Site(String configFileContent, Path path) throws ValidationException {
+    this.path = path;
+    String schema = "schema/site-config-schema.json";
+    ConfigGenerator<Site.Config> cg =
+        new ConfigGenerator<>(configFileContent, schema, Site.Config.class);
+    config = cg.getConfigObject();
   }
 
   /**
    * @return Les pages contenues dans le site
    */
-  public List<Page> retrievePages() {
-    throw new NotImplementedException("You must implement this method");
+  public ArrayList<Page> retrievePages() {
+    return pages;
+  }
+
+  public void addPage(Page page) {
+    pages.add(page);
+  }
+
+  public String getTitle() {
+    return config.getTitle();
+  }
+
+  public String getOwner() {
+    return config.getOwner();
+  }
+
+  public String getDomain() {
+    return config.getDomain();
+  }
+
+  public String configToJSON() {
+    return config.getJSON();
+  }
+
+  public Path getPath() {
+    return path;
   }
 
   /** Représentes la configuration d'un site */
   public static class Config {
-    private final String title;
-    private final String owner;
-    private final String domain;
+
+    /** Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON */
+    public Config() {}
+
+    public void setOwner(String owner) {
+      this.owner = owner;
+    }
+
+    public void setDomain(String domain) {
+      this.domain = domain;
+    }
+
+    public void setTitle(String title) {
+      this.title = title;
+    }
+
+    private String owner;
+    private String domain;
+    private String title;
 
     /**
      * @param title Le titre du site
@@ -44,21 +95,21 @@ public class Site {
     /**
      * @return Le titre du site
      */
-    public String getTitle() {
+    private String getTitle() {
       return title;
     }
 
     /**
      * @return Le propriétaire du site
      */
-    public String getOwner() {
+    private String getOwner() {
       return owner;
     }
 
     /**
      * @return Le domaine du site
      */
-    public String getDomain() {
+    private String getDomain() {
       return domain;
     }
 

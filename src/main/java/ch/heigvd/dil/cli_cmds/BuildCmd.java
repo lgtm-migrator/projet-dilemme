@@ -1,11 +1,15 @@
 package ch.heigvd.dil.cli_cmds;
 
+import ch.heigvd.dil.data_structures.Page;
+import ch.heigvd.dil.data_structures.Site;
 import ch.heigvd.dil.utils.FileHandler;
 import ch.heigvd.dil.utils.parsers.MarkdownParser;
-import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.concurrent.Callable;
+import org.everit.json.schema.ValidationException;
 import picocli.CommandLine;
 
 /**
@@ -17,6 +21,8 @@ public class BuildCmd implements Callable<Integer> {
   // paramètre indiquant le site le chemin du site à initialiser
   @CommandLine.Parameters(description = "The site path to build")
   String path;
+
+  private Site site;
 
   @Override
   public Integer call() {
@@ -32,11 +38,17 @@ public class BuildCmd implements Callable<Integer> {
 
     // Vérifie si le site est initialisé
     int initFiles = 0;
+    File configFile = null;
     for (File f : allFiles) {
-      if (f.getName().equals("index.md") || f.getName().equals("config.json")) ++initFiles;
+      if (f.getName().equals("index.md")) {
+        ++initFiles;
+      } else if (f.getName().equals("config.json")) {
+        ++initFiles;
+        configFile = f;
+      }
     }
 
-    if (initFiles != 2) {
+    if (initFiles != 2 || configFile == null) {
       System.err.println("Error: The site has to be initialized first.");
       return 1;
     }
@@ -57,6 +69,17 @@ public class BuildCmd implements Callable<Integer> {
       return 1;
     }
 
+    // Création de la classe Site
+    try {
+      site = new Site(FileHandler.read(configFile), Paths.get(buildDir.getPath()));
+    } catch (IOException e) {
+      System.err.println("Cannot read config file. Aborting...");
+      return 1;
+    } catch (ValidationException e) {
+      System.err.println(e.getViolatedSchema());
+      return 1;
+    }
+
     // Convertit les fichiers Markdown en HTML
     try {
       recursiveExploration("");
@@ -64,6 +87,19 @@ public class BuildCmd implements Callable<Integer> {
       System.err.println("Error: Could not build site : " + e.getMessage());
       FileHandler.delete(buildDir);
       return 1;
+    }
+
+    for (Page p : site.retrievePages()) {
+      // convertit le fichier Markdown en HTML
+      File htmlFile = new File(path + "/" + p.getPath().toString());
+
+      String htmlContent = MarkdownParser.convertMarkdownToHTML(p.getMarkdown());
+
+      try {
+        FileHandler.write(htmlFile, htmlContent);
+      } catch (IOException e) {
+        System.err.println("Error while writing file " + p.getPath().toString());
+      }
     }
 
     System.out.println("Site built.");
@@ -96,21 +132,24 @@ public class BuildCmd implements Callable<Integer> {
         // explore le sous-dossier
         recursiveExploration(folderPath + "/" + f.getName());
       } else if (f.getName().endsWith(".md")) {
-        // convertit le fichier Markdown en HTML
         String htmlFileName = f.getName().replace(".md", ".html");
-        File htmlFile = new File(path, "build" + folderPath + "/" + htmlFileName);
+        Path path = Paths.get("build" + folderPath + "/" + htmlFileName);
 
-        String content = FileHandler.read(f);
-
-        PageContentSeparator pageContent = new PageContentSeparator(content);
-
-        String mdContent = pageContent.getContent();
-
-        // TODO: lire les configs et les utiliser
-
-        String htmlContent = MarkdownParser.convertMarkdownToHTML(mdContent);
-
-        FileHandler.write(htmlFile, htmlContent);
+        try {
+          Page page = new Page(FileHandler.read(f), path);
+          site.addPage(page);
+        } catch (ParseException e) {
+          System.err.println(
+              "Warning : Bad page format. " + f.getName() + " not generated. Continuing...");
+        } catch (ValidationException e) {
+          System.err.println(
+              "Warning : Bad configuration in page "
+                  + f.getName()
+                  + ". Page not generated. Continuing...");
+        } catch (IOException e) {
+          System.err.println(
+              "Error while reading file " + f.getName() + ". Page not generated. Continuing...");
+        }
       }
     }
   }
