@@ -70,7 +70,7 @@ public class BuildCmd implements Callable<Integer> {
     }
 
     // Création de la classe Site
-    try{
+    try {
       site = new Site(FileHandler.read(configFile), Paths.get(buildDir.getPath()));
     } catch (IOException e) {
       System.err.println("Cannot read config file. Aborting...");
@@ -147,7 +147,8 @@ public class BuildCmd implements Callable<Integer> {
                   + f.getName()
                   + ". Page not generated. Continuing...");
         } catch (IOException e) {
-          System.err.println("Error while reading file " + f.getName() + ". Page not generated. Continuing...");
+          System.err.println(
+              "Error while reading file " + f.getName() + ". Page not generated. Continuing...");
         }
       }
     }

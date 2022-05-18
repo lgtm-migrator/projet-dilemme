@@ -1,12 +1,11 @@
 package ch.heigvd.dil.data_structures;
 
+import static org.junit.Assert.fail;
+
+import java.nio.file.Paths;
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.nio.file.Paths;
-
-import static org.junit.Assert.fail;
 
 public class SiteTest {
 
@@ -24,13 +23,10 @@ public class SiteTest {
 
   @Test
   public void createSiteFromValidConfigShouldNotThrow() {
-    try{
+    try {
       new Site(validConfig.toString(), Paths.get(""));
     } catch (Exception e) {
       fail();
     }
-
   }
-
-
 }

@@ -1,11 +1,9 @@
 package ch.heigvd.dil.data_structures;
 
 import ch.heigvd.dil.utils.parsers.ConfigGenerator;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.everit.json.schema.ValidationException;
-
 import java.nio.file.Path;
 import java.util.ArrayList;
+import org.everit.json.schema.ValidationException;
 
 /** Représente un site. */
 public class Site {
@@ -25,7 +23,8 @@ public class Site {
   public Site(String configFileContent, Path path) throws ValidationException {
     this.path = path;
     String schema = "schema/site-config-schema.json";
-    ConfigGenerator<Site.Config> cg = new ConfigGenerator<>(configFileContent, schema, Site.Config.class);
+    ConfigGenerator<Site.Config> cg =
+        new ConfigGenerator<>(configFileContent, schema, Site.Config.class);
     config = cg.getConfigObject();
   }
 
@@ -63,28 +62,24 @@ public class Site {
   /** Représentes la configuration d'un site */
   public static class Config {
 
-    /**
-     * Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON
-     */
+    /** Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON */
     public Config() {}
 
-    public void setOwner (String owner) {
+    public void setOwner(String owner) {
       this.owner = owner;
     }
 
-    public void setDomain (String domain) {
+    public void setDomain(String domain) {
       this.domain = domain;
     }
 
-    public void setTitle (String title) {
+    public void setTitle(String title) {
       this.title = title;
     }
 
     private String owner;
     private String domain;
     private String title;
-
-
 
     /**
      * @param title Le titre du site
