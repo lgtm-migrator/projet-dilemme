@@ -1,12 +1,8 @@
 package ch.heigvd.dil.cli_cmds;
 
-import ch.heigvd.dil.Main;
-import java.awt.Desktop;
-import java.io.File;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import java.util.concurrent.Callable;
-
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "serve", description = "Serve the site on a local http server.")
@@ -22,9 +18,11 @@ public class ServeCmd implements Callable<Integer> {
     new CommandLine(new BuildCmd()).execute(path);
 
     // Serve the site
-    Javalin.create(config -> {
-      config.addStaticFiles(path + "/build", Location.EXTERNAL);
-    }).start(8080);
+    Javalin.create(
+            config -> {
+              config.addStaticFiles(path + "/build", Location.EXTERNAL);
+            })
+        .start(8080);
 
     return 0;
   }
