@@ -7,7 +7,7 @@ import java.net.URI;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "serve", description = "")
+@CommandLine.Command(name = "serve", description = "Serve the website")
 public class ServeCmd implements Callable<Integer> {
   @CommandLine.Parameters(description = "The site path to serve")
   String path;
