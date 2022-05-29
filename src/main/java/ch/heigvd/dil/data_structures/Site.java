@@ -51,6 +51,10 @@ public class Site {
     return config.getDomain();
   }
 
+  public Site.Config getConfig() {
+    return config;
+  }
+
   public String configToJSON() {
     return config.getJSON();
   }
