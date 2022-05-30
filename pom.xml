@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ch.heigvd.dil</groupId>
-  <artifactId>projet-dilemme</artifactId>
+  <artifactId>dilemme</artifactId>
   <version>release</version>
   <packaging>jar</packaging>
 
-  <name>projet-dilemme</name>
+  <name>dilemme</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
