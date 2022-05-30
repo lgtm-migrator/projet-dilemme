@@ -8,3 +8,6 @@ target
 
 # build dest
 devSite
+
+.attach_pid*
+site_*/

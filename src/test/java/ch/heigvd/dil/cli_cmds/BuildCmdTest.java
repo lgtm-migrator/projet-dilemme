@@ -27,8 +27,9 @@ public class BuildCmdTest {
               .contains("<h1>Your content here</h1>"));
     } catch (IOException e) {
       fail();
+    } finally {
+      FileHandler.delete(site.toFile());
     }
-    FileHandler.delete(site.toFile());
   }
 
   @Test
