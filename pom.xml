@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>ch.heigvd.dil</groupId>
-  <artifactId>projet-dilemme</artifactId>
+  <artifactId>dilemme</artifactId>
   <version>release</version>
   <packaging>jar</packaging>
 
-  <name>projet-dilemme</name>
+  <name>dilemme</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -88,6 +88,11 @@
       <scope>compile</scope>
     </dependency>
 
+    <dependency>
+      <groupId>com.github.jknack</groupId>
+      <artifactId>handlebars-jackson2</artifactId>
+      <version>1.3.1</version>
+    </dependency>
     <dependency>
       <groupId>io.javalin</groupId>
       <artifactId>javalin</artifactId>

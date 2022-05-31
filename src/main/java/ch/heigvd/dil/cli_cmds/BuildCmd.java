@@ -3,8 +3,9 @@ package ch.heigvd.dil.cli_cmds;
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
 import ch.heigvd.dil.utils.FileHandler;
-import ch.heigvd.dil.utils.parsers.MarkdownParser;
+import ch.heigvd.dil.utils.TemplateInjector;
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -89,16 +90,17 @@ public class BuildCmd implements Callable<Integer> {
       return 1;
     }
 
+    TemplateInjector ti = new TemplateInjector(site.getConfig());
     for (Page p : site.retrievePages()) {
       // convertit le fichier Markdown en HTML
       File htmlFile = new File(path + "/" + p.getPath().toString());
-
-      String htmlContent = MarkdownParser.convertMarkdownToHTML(p.getMarkdown());
-
       try {
+        String layout = ti.getDefaultLayout();
+        String htmlContent = ti.resolveProperties(layout, p);
         FileHandler.write(htmlFile, htmlContent);
       } catch (IOException e) {
         System.err.println("Error while writing file " + p.getPath().toString());
+        return 1;
       }
     }
 
@@ -111,7 +113,7 @@ public class BuildCmd implements Callable<Integer> {
    *
    * @param folderPath le chemin du dossier courant
    */
-  private void recursiveExploration(String folderPath) throws IOException, ParseException {
+  private void recursiveExploration(String folderPath) throws IOException {
     boolean status;
 
     File[] files = new File(path, folderPath).listFiles();
@@ -150,6 +152,8 @@ public class BuildCmd implements Callable<Integer> {
           System.err.println(
               "Error while reading file " + f.getName() + ". Page not generated. Continuing...");
         }
+      } else if (!f.getName().equals("config.json")) { // les autres fichiers
+        Files.copy(f.toPath(), Paths.get(path, "build" + folderPath + "/" + f.getName()));
       }
     }
   }

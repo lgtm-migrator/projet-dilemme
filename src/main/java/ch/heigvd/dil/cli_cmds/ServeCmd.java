@@ -13,8 +13,6 @@ public class ServeCmd implements Callable<Integer> {
 
   @Override
   public Integer call() {
-    // int exitCode = new CommandLine(new Main()).execute("build", path);
-    // Build the site
     new CommandLine(new BuildCmd()).execute(path);
 
     // Serve the site
