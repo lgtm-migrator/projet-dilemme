@@ -6,31 +6,30 @@ import static org.junit.Assert.fail;
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
 import ch.heigvd.dil.utils.parsers.PageContentSeparator;
-import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import org.junit.Before;
 import org.junit.Test;
 
 public class TemplateInjectorTest {
-  private static final String RESOURCES_PATH = "src/test/resources/";
   private Page page;
   private TemplateInjector injector;
-  private final File layout =
-      new File(RESOURCES_PATH + "testFiles/test-template/layout-valid.html");
-
-  private final Site.Config siteConfig = new Site.Config("Mon Blog", "Charles", "test.com");
 
   @Before
   public void setUpPage() {
     try {
-      String path = RESOURCES_PATH + "testFiles/test-page/test-page-valid.md";
-      String content = Files.readString(Paths.get(path));
+      String content = Resources.readAsString("testFiles/test-page/test-page-valid.md");
       PageContentSeparator pcs = new PageContentSeparator(content);
       page = new Page(pcs.getConfig(), pcs.getContent());
     } catch (Exception e) {
       fail();
     }
+  }
+
+  @Before
+  public void setUpTemplateInjector() {
+    Site.Config siteConfig = new Site.Config("Mon Blog", "Charles", "test.com");
+    Site site = new Site(siteConfig, Paths.get("/valid-site/"));
+    injector = new TemplateInjector(site);
   }
 
   private void shouldInjectString(String layout, String expected) {
@@ -40,11 +39,6 @@ public class TemplateInjectorTest {
     } catch (Exception e) {
       fail();
     }
-  }
-
-  @Before
-  public void setUpTemplateInjector() {
-    injector = new TemplateInjector(siteConfig);
   }
 
   @Test
@@ -91,6 +85,7 @@ public class TemplateInjectorTest {
   @Test
   public void shouldInjectPageProperties() {
     try {
+      String layout = Resources.readAsString("testFiles/test-template/layout-valid.html");
       String result = injector.resolveProperties(layout, page);
       assertEquals(
           "<html lang=\"en\">\n"
@@ -110,6 +105,16 @@ public class TemplateInjectorTest {
     } catch (Exception e) {
       fail();
     }
+  }
+
+  @Test
+  public void shouldIncludeFileContent() {
+    shouldInjectString(
+        "{{> menu }}",
+        "<ul>\n"
+            + "    <li><a href=\"index.html\">home</a></li>\n"
+            + "    <li><a href=\"https://dlang.org/\">Awesome language</a></li>\n"
+            + "</ul>");
   }
 
   @Test
