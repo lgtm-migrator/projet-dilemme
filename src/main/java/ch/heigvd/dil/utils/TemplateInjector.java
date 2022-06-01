@@ -12,7 +12,6 @@ import com.github.jknack.handlebars.context.JavaBeanValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
 import com.github.jknack.handlebars.context.MethodValueResolver;
 import java.io.*;
-import java.net.URL;
 import java.nio.file.Files;
 
 public class TemplateInjector {

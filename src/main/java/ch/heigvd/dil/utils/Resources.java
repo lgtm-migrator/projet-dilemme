@@ -1,12 +1,11 @@
 package ch.heigvd.dil.utils;
 
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 public class Resources {
 
@@ -16,7 +15,8 @@ public class Resources {
 
   public static String readAsString(String path) throws IOException {
     StringBuilder result = new StringBuilder();
-    try (BufferedReader in = new BufferedReader(new InputStreamReader(getResourceAsStream("/" + path)))) {
+    try (BufferedReader in =
+        new BufferedReader(new InputStreamReader(getResourceAsStream("/" + path)))) {
       String line;
       while ((line = in.readLine()) != null) result.append(line);
     }
