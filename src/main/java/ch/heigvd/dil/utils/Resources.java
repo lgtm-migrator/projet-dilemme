@@ -4,28 +4,26 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class Resources {
 
-  private static InputStream getResourceAsStream(String path) {
-    return Resources.class.getResourceAsStream(path);
-  }
-
-  public static String readAsString(String path) throws IOException {
-    StringBuilder result = new StringBuilder();
-    try (BufferedReader in =
-        new BufferedReader(new InputStreamReader(getResourceAsStream("/" + path)))) {
-      String line;
-      while ((line = in.readLine()) != null) result.append(line);
+  public static String readAsString(String path) throws IOException, NullPointerException {
+    try (BufferedReader reader =
+        new BufferedReader(
+            new InputStreamReader(
+                Objects.requireNonNull(Resources.class.getResourceAsStream("/" + path))))) {
+      ;
+      return reader.lines().collect(Collectors.joining("\n"));
     }
-    return result.toString();
   }
 
   public static JSONObject readAsJSON(String path) {
     JSONObject out;
-    try (InputStream in = getResourceAsStream("/" + path)) {
+    try (InputStream in = Resources.class.getResourceAsStream("/" + path)) {
       if (in != null) {
         out = new JSONObject(new JSONTokener(in));
       } else {
