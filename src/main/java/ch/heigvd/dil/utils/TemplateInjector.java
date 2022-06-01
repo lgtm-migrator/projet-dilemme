@@ -68,18 +68,6 @@ public class TemplateInjector {
   }
 
   public String getDefaultLayout() throws IOException {
-    URL url = getClass().getResource("/template/default_page.html");
-    String result = "";
-
-    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-    try {
-      String line;
-      while ((line = in.readLine()) != null) result += line;
-    } catch (IOException e) {
-      throw e;
-    } finally {
-      in.close();
-    }
-    return result;
+    return Resources.readAsString("template/default_page.html");
   }
 }
