@@ -19,7 +19,7 @@ public class TemplateInjectorTest {
   private final File layout =
       new File(RESOURCES_PATH + "testFiles/test-template/layout-valid.html");
 
-  private final Site.Config siteConfig = new Site.Config("Mon Blog", "Charles", "http://localhost");
+  private final Site.Config siteConfig = new Site.Config("Mon Blog", "Charles", "test.com");
 
   @Before
   public void setUpPage() {
@@ -74,13 +74,19 @@ public class TemplateInjectorTest {
   }
 
   @Test
-  public void shouldInjectSiteTitle() {}
+  public void shouldInjectSiteTitle() {
+    shouldInjectString("{{ site.title }}", "Mon Blog");
+  }
 
   @Test
-  public void shouldInjectSiteOwner() {}
+  public void shouldInjectSiteOwner() {
+    shouldInjectString("{{ site.owner }}", "Charles");
+  }
 
   @Test
-  public void shouldInjectSiteDomain() {}
+  public void shouldInjectSiteDomain() {
+    shouldInjectString("{{ site.domain }}", "test.com");
+  }
 
   @Test
   public void shouldInjectPageProperties() {
@@ -121,7 +127,7 @@ public class TemplateInjectorTest {
               + "  \"site\" : {\n"
               + "    \"title\" : \"Mon Blog\",\n"
               + "    \"owner\" : \"Charles\",\n"
-              + "    \"domain\" : \"http://localhost\"\n"
+              + "    \"domain\" : \"test.com\"\n"
               + "  },\n"
               + "  \"content\" : \"<h1>Titre au format md</h1>\\n"
               + "<h2>sous-titre</h2>\\n"
