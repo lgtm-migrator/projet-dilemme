@@ -90,7 +90,7 @@ public class BuildCmd implements Callable<Integer> {
       return 1;
     }
 
-    TemplateInjector ti = new TemplateInjector(site.getConfig());
+    TemplateInjector ti = new TemplateInjector(site);
     for (Page p : site.retrievePages()) {
       // convertit le fichier Markdown en HTML
       File htmlFile = new File(path + "/" + p.getPath().toString());
