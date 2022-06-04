@@ -12,6 +12,7 @@ import com.github.jknack.handlebars.context.JavaBeanValueResolver;
 import com.github.jknack.handlebars.context.MapValueResolver;
 import com.github.jknack.handlebars.context.MethodValueResolver;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
+import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import java.io.*;
 import java.nio.file.Files;
@@ -21,8 +22,12 @@ public class TemplateInjector {
   private final Site site;
 
   public TemplateInjector(Site site) {
-    TemplateLoader loader = new ClassPathTemplateLoader(site.getPath() + "/template", ".html");
-    handlebars = new Handlebars(loader);
+    String templatePath = site.getPath() + "/template";
+    String suffix = ".html";
+    TemplateLoader fileLoader = new FileTemplateLoader(templatePath, suffix);
+    TemplateLoader classPathLoader = new ClassPathTemplateLoader(templatePath, suffix);
+
+    handlebars = new Handlebars().with(fileLoader, classPathLoader);
     this.site = site;
   }
 

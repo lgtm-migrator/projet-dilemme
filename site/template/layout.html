@@ -1,0 +1,13 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>{{ site.titre }} | {{ page.titre }}</title>
+</head>
+<body>
+{{> menu }}
+{{{ content }}}
+</body>
+<footer>
+    <p>Page créée par {{ page.author }} sur le site de {{ site.owner }}</p>
+</footer>
+</html>
