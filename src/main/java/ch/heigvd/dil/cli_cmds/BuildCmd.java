@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 import org.everit.json.schema.ValidationException;
 import picocli.CommandLine;
@@ -28,7 +30,6 @@ public class BuildCmd implements Callable<Integer> {
   @Override
   public Integer call() {
     System.out.println("Building site...");
-    boolean status;
 
     File[] allFiles = new File(path).listFiles();
 
@@ -57,22 +58,20 @@ public class BuildCmd implements Callable<Integer> {
     // Crée le dossier build
     File buildDir = new File(path, "build");
     if (buildDir.exists()) {
-      status = FileHandler.delete(buildDir);
-      if (!status) {
+      if (!FileHandler.delete(buildDir)) {
         System.err.println("Error: Could not delete the build folder.");
         return 1;
       }
     }
 
-    status = buildDir.mkdir();
-    if (!status) {
+    if (!buildDir.mkdir()) {
       System.err.println("Error: Could not create build folder.");
       return 1;
     }
 
     // Création de la classe Site
     try {
-      site = new Site(FileHandler.read(configFile), Paths.get(buildDir.getPath()));
+      site = new Site(FileHandler.read(configFile), Paths.get(path));
     } catch (IOException e) {
       System.err.println("Cannot read config file. Aborting...");
       return 1;
@@ -91,11 +90,25 @@ public class BuildCmd implements Callable<Integer> {
     }
 
     TemplateInjector ti = new TemplateInjector(site);
+    String layout;
+    try {
+      File templateDir = new File(path, "template/layout.html");
+      layout = FileHandler.read(templateDir);
+    } catch (Exception ignored) {
+      // a try-catch inside a catch is a bit weird...
+      try {
+        layout = ti.getDefaultLayout();
+      } catch (IOException e) {
+        System.err.println("Error: Could not read layout template.");
+        FileHandler.delete(buildDir);
+        return 1;
+      }
+    }
+
     for (Page p : site.retrievePages()) {
       // convertit le fichier Markdown en HTML
       File htmlFile = new File(path + "/" + p.getPath().toString());
       try {
-        String layout = ti.getDefaultLayout();
         String htmlContent = ti.resolveProperties(layout, p);
         FileHandler.write(htmlFile, htmlContent);
       } catch (IOException e) {
@@ -123,7 +136,8 @@ public class BuildCmd implements Callable<Integer> {
 
     for (File f : files) {
       if (f.isDirectory()) {
-        if (f.getName().equals("build")) continue;
+        ArrayList<String> ignoredDirs = new ArrayList<String>(Arrays.asList("build", "template"));
+        if (ignoredDirs.contains(f.getName())) continue;
         // crée un sous-dossier dans build
         String subFolder = folderPath + "/" + f.getName();
         status = new File(path, "build" + subFolder).mkdir();
