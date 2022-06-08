@@ -5,14 +5,13 @@ import picocli.CommandLine;
 
 /** DILemme ! */
 @CommandLine.Command(
-    name = "DILemme",
+    name = "dilemme",
     subcommands = {
-      NewCmd.class,
-      CleanCmd.class,
       BuildCmd.class,
-      ServeCmd.class, /*, CommandLine.HelpCommand.class */
-      VersionCmd.class,
+      CleanCmd.class,
       InitCmd.class,
+      ServeCmd.class,
+      VersionCmd.class,
     },
     description = "")
 public class Main {
