@@ -1,11 +1,7 @@
 package ch.heigvd.dil.benchmarks;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import ch.heigvd.dil.cli_cmds.BuildCmd;
 import ch.heigvd.dil.utils.parsers.MarkdownParser;
+import java.util.concurrent.TimeUnit;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -58,7 +54,7 @@ public class BenchmarkList {
   @Measurement(iterations = 10)
   public void build() {
     for (int i = 0; i < size; i++) {
-      //simple appel du markdown parser
+      // simple appel du markdown parser
       MarkdownParser.convertMarkdownToHTML("#titre");
     }
   }
@@ -70,7 +66,7 @@ public class BenchmarkList {
   public void buildOptimized() {
 
     for (int i = 0; i < size; i++) {
-      //appel du markdown parser en réutilisant le même parser à chaque fois
+      // appel du markdown parser en réutilisant le même parser à chaque fois
       Node document = parser.parse("#titre");
       HtmlRenderer htmlRenderer = HtmlRenderer.builder().build();
       htmlRenderer.render(document);
