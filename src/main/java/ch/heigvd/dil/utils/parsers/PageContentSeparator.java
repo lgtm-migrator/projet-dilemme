@@ -19,6 +19,7 @@ public class PageContentSeparator {
    *
    * @param file String contenant la page non parsée
    * @throws ParseException si la page ne contient pas de séparateur
+   * @throws ValidationException si la configuration JSON n'est pas valide.
    */
   public PageContentSeparator(String file) throws ParseException, ValidationException {
     int index = file.indexOf(SEP);
@@ -39,7 +40,7 @@ public class PageContentSeparator {
   }
 
   /**
-   * Récupère la partie configuration de la page
+   * Récupère la partie configuration de la page.
    *
    * @return configuration valide
    */
@@ -47,6 +48,13 @@ public class PageContentSeparator {
     return config;
   }
 
+  /**
+   * Génère une configuration de page à partir d'un JSON.
+   *
+   * @param configStr JSON de la configuration
+   * @return Une instance de Page.Config
+   * @throws ValidationException si la configuration JSON n'est pas valide
+   */
   private static Page.Config genPageConfig(String configStr) throws ValidationException {
     String schema = "schema/page-config-schema.json";
     ConfigGenerator<Page.Config> validator =
