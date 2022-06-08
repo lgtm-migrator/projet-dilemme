@@ -34,6 +34,7 @@ public class FileHandler {
       content.append(line).append("\n");
     }
 
+    br.close();
     return content.toString();
   }
 

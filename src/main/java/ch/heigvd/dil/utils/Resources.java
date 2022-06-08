@@ -25,7 +25,6 @@ public class Resources {
         new BufferedReader(
             new InputStreamReader(
                 Objects.requireNonNull(Resources.class.getResourceAsStream("/" + path))))) {
-      ;
       return reader.lines().collect(Collectors.joining("\n"));
     }
   }
