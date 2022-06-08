@@ -19,6 +19,14 @@ public class ConfigGenerator<T> {
   private final JSONObject validConfig;
   private final Class<T> configType;
 
+  /**
+   * Construit un générateur de configuration.
+   *
+   * @param config La configuration au format JSON
+   * @param schemaPath Le chemin vers le schéma de validation
+   * @param targetClass Le type de la configuration à générer
+   * @throws ValidationException si la configuration JSON n'est pas valide
+   */
   public ConfigGenerator(String config, String schemaPath, Class<T> targetClass)
       throws ValidationException {
     configType = targetClass;
@@ -46,6 +54,14 @@ public class ConfigGenerator<T> {
     return out;
   }
 
+  /**
+   * Valide la configuration au format JSON selon le schéma.
+   *
+   * @param strConfig La configuration au format JSON
+   * @param jsonSchema Le schéma de validation
+   * @return Un objet JSON
+   * @throws ValidationException si la configuration JSON n'est pas valide
+   */
   private static JSONObject validateConfig(String strConfig, JSONObject jsonSchema)
       throws ValidationException {
     Schema schema = SchemaLoader.load(jsonSchema);
