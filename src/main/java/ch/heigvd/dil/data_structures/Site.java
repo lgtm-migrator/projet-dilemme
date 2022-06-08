@@ -7,7 +7,7 @@ import org.everit.json.schema.ValidationException;
 
 /** Représente un site. */
 public class Site {
-  private Site.Config config;
+  private final Site.Config config;
   private final Path path;
   private final ArrayList<Page> pages = new ArrayList<>();
 
@@ -47,38 +47,10 @@ public class Site {
   }
 
   /**
-   * @return Le titre du site
-   */
-  public String getTitle() {
-    return config.getTitle();
-  }
-
-  /**
-   * @return Le propriétaire du site
-   */
-  public String getOwner() {
-    return config.getOwner();
-  }
-
-  /**
-   * @return Le domain du site
-   */
-  public String getDomain() {
-    return config.getDomain();
-  }
-
-  /**
    * @return la configuration du site
    */
   public Site.Config getConfig() {
     return config;
-  }
-
-  /**
-   * @return La configuration du site au format JSON
-   */
-  public String configToJSON() {
-    return config.getJSON();
   }
 
   /**
