@@ -4,9 +4,7 @@ import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
-/**
- * Permet de convertir un texte markdown dans un format différent.
- */
+/** Permet de convertir un texte markdown dans un format différent. */
 public class MarkdownParser {
   /**
    * Convertit une chaine de caractères markdown en HTML.

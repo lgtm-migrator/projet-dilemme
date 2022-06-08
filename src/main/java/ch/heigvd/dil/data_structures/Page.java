@@ -28,12 +28,12 @@ public class Page {
     path = Paths.get("");
   }
 
-    /**
-     * Construit une page depuis une chaine de caractères et le chemin source.
-     *
-     * @param fileContent Contenu de la page (le markdown et le header JSON)
-     * @param path Chemin source de la page
-     */
+  /**
+   * Construit une page depuis une chaine de caractères et le chemin source.
+   *
+   * @param fileContent Contenu de la page (le markdown et le header JSON)
+   * @param path Chemin source de la page
+   */
   public Page(String fileContent, Path path) throws ParseException, ValidationException {
     PageContentSeparator sep = new PageContentSeparator(fileContent);
     pageConfig = sep.getConfig();
@@ -49,7 +49,6 @@ public class Page {
   }
 
   /**
-   *
    * @return Le chemin de la page
    */
   public Path getPath() {
