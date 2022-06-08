@@ -12,6 +12,8 @@ public class Site {
   private final ArrayList<Page> pages = new ArrayList<>();
 
   /**
+   * Construit un site ayant pour chemin (répertoire) le chemin passé en paramètre.
+   *
    * @param config La configuration du site
    * @param path Le chemin source du site
    */
@@ -35,30 +37,53 @@ public class Site {
     return pages;
   }
 
+  /**
+   * Ajout une page au site.
+   *
+   * @param page Page à ajouter
+   */
   public void addPage(Page page) {
     pages.add(page);
   }
 
+  /**
+   * @return Le titre du site
+   */
   public String getTitle() {
     return config.getTitle();
   }
 
+  /**
+   * @return Le propriétaire du site
+   */
   public String getOwner() {
     return config.getOwner();
   }
 
+  /**
+   * @return Le domain du site
+   */
   public String getDomain() {
     return config.getDomain();
   }
 
+  /**
+   * @return la configuration du site
+   */
   public Site.Config getConfig() {
     return config;
   }
 
+  /**
+   * @return La configuration du site au format JSON
+   */
   public String configToJSON() {
     return config.getJSON();
   }
 
+  /**
+   * @return Le chemin du site
+   */
   public Path getPath() {
     return path;
   }
@@ -69,14 +94,29 @@ public class Site {
     /** Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON */
     public Config() {}
 
+    /**
+     * Défini le propriétaire du site.
+     *
+     * @param owner Le propriétaire du site
+     */
     public void setOwner(String owner) {
       this.owner = owner;
     }
 
+    /**
+     * Défini le domaine du site.
+     *
+     * @param domain Le domain du site
+     */
     public void setDomain(String domain) {
       this.domain = domain;
     }
 
+    /**
+     * Défini le titre du site.
+     *
+     * @param title Le titre du site
+     */
     public void setTitle(String title) {
       this.title = title;
     }
