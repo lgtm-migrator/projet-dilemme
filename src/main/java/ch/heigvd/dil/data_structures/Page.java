@@ -12,15 +12,15 @@ import org.everit.json.schema.ValidationException;
 
 /** Représente une page. */
 public class Page {
-  // TODO: retirer la propriété siteConfig
   private final Page.Config pageConfig;
   private final String markdown;
   private final Path path;
 
   /**
-   * Construit une page.
+   * Construit une page depuis le contenu Markdown et une configuration de page.
    *
-   * @param markdown Contenu markdown dans le corps de la page.
+   * @param pageConfig Chemin source de la page
+   * @param markdown Contenu markdown dans le corps de la page
    */
   public Page(Config pageConfig, String markdown) {
     this.pageConfig = pageConfig;
@@ -28,6 +28,12 @@ public class Page {
     path = Paths.get("");
   }
 
+  /**
+   * Construit une page depuis une chaine de caractères et le chemin source.
+   *
+   * @param fileContent Contenu de la page (le markdown et le header JSON)
+   * @param path Chemin source de la page
+   */
   public Page(String fileContent, Path path) throws ParseException, ValidationException {
     PageContentSeparator sep = new PageContentSeparator(fileContent);
     pageConfig = sep.getConfig();
@@ -36,18 +42,21 @@ public class Page {
   }
 
   /**
-   * @return La configuration de la page.
+   * @return La configuration de la page
    */
   public Page.Config getPageConfig() {
     return pageConfig;
   }
 
+  /**
+   * @return Le chemin de la page
+   */
   public Path getPath() {
     return path;
   }
 
   /**
-   * @return Le contenu markdown de la page.
+   * @return Le contenu markdown de la page
    */
   public String getMarkdown() {
     return markdown;
@@ -65,9 +74,9 @@ public class Page {
     /**
      * Construit une configuration de page.
      *
-     * @param title Le titre de la page.
-     * @param author L'auteur de la page.
-     * @param date La date de création de la page.
+     * @param title Le titre de la page
+     * @param author L'auteur de la page
+     * @param date La date de création de la page
      */
     public Config(String title, String author, LocalDate date) {
       this.title = title;
@@ -78,28 +87,28 @@ public class Page {
     public Config() {}
 
     /**
-     * @return Le titre de la page.
+     * @return Le titre de la page
      */
     public String getTitle() {
       return title;
     }
 
     /**
-     * @return L'auteur de la page.
+     * @return L'auteur de la page
      */
     public String getAuthor() {
       return author;
     }
 
     /**
-     * @return La date de création de la page.
+     * @return La date de création de la page
      */
     public LocalDate getDate() {
       return date;
     }
 
     /**
-     * @return Un string représentant la configuration de la page au format JSON.
+     * @return Un string représentant la configuration de la page au format JSON
      */
     public String getJSON() {
       return "{\n  \"title\": \""

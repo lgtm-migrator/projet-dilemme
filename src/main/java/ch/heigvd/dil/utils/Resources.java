@@ -9,8 +9,17 @@ import java.util.stream.Collectors;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+/** Permet de facilement lire une ressource (interne au fichier JAR). */
 public class Resources {
 
+  /**
+   * Récupère le contenu d'une ressource en tant que chaine de caractère.
+   *
+   * @param path Le chemin vers la ressource
+   * @return Le contenu de la ressource
+   * @throws IOException si la ressource n'a pas pu être lue
+   * @throws NullPointerException si la ressource n'existe pas
+   */
   public static String readAsString(String path) throws IOException, NullPointerException {
     try (BufferedReader reader =
         new BufferedReader(
@@ -21,6 +30,12 @@ public class Resources {
     }
   }
 
+  /**
+   * Récupère le contenu d'une ressource en tant que chaine de caractère.
+   *
+   * @param path Le chemin vers la ressource
+   * @return Le contenu de la ressource
+   */
   public static JSONObject readAsJSON(String path) {
     JSONObject out;
     try (InputStream in = Resources.class.getResourceAsStream("/" + path)) {
