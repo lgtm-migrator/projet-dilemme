@@ -1,5 +1,7 @@
 package ch.heigvd.dil.cli_cmds;
 
+import static java.nio.file.StandardWatchEventKinds.*;
+
 import ch.heigvd.dil.data_structures.Page;
 import ch.heigvd.dil.data_structures.Site;
 import ch.heigvd.dil.utils.FileHandler;
@@ -14,8 +16,6 @@ import java.util.concurrent.Callable;
 import org.everit.json.schema.ValidationException;
 import picocli.CommandLine;
 
-import static java.nio.file.StandardWatchEventKinds.*;
-
 /**
  * Cette classe reproduit la structure du site et convertit les fichiers Markdown en HTML et
  * retourne le résultat dans le dossier "build"
@@ -24,8 +24,9 @@ import static java.nio.file.StandardWatchEventKinds.*;
 public class BuildCmd implements Callable<Integer> {
   // paramètre indiquant le site le chemin du site à initialiser
 
-  @CommandLine.Option(names = "--watch", description = "Automatically rebuild the " +
-          "site when a file is changed")
+  @CommandLine.Option(
+      names = "--watch",
+      description = "Automatically rebuild the " + "site when a file is changed")
   boolean watchOption;
 
   @CommandLine.Parameters(description = "The site path to build")
@@ -43,8 +44,9 @@ public class BuildCmd implements Callable<Integer> {
   }
 
   /**
-   * Construit le site générant les pages HTML à partir des fichiers Markdown
-   * (en utilisant des templates). Le site est construit dans le dossier "build".
+   * Construit le site générant les pages HTML à partir des fichiers Markdown (en utilisant des
+   * templates). Le site est construit dans le dossier "build".
+   *
    * @return 0 si tout s'est bien passé, 1 sinon.
    */
   int buildWebsite() {
@@ -129,8 +131,7 @@ public class BuildCmd implements Callable<Integer> {
     for (Page p : site.retrievePages()) {
       try {
         p.generate(layout, ti, siteRoot); // Génère la page
-      }
-      catch (IOException e){
+      } catch (IOException e) {
         System.err.println("Error while writing file " + p.getPath().toString());
         return 1;
       }
@@ -192,15 +193,15 @@ public class BuildCmd implements Callable<Integer> {
   }
 
   /**
-   * Construit le site avec un watcher
-   * (à chaque changement de fichier, le site est reconstruit)
+   * Construit le site avec un watcher (à chaque changement de fichier, le site est reconstruit)
+   *
    * @return le code de retour de la commande
    */
-  private int buildWithWatcher(){
+  private int buildWithWatcher() {
 
     // Build le site une fois avant de commencer
     int buildingStatus = buildWebsite();
-    if (buildingStatus != 0){
+    if (buildingStatus != 0) {
       return buildingStatus;
     }
 
@@ -211,18 +212,16 @@ public class BuildCmd implements Callable<Integer> {
 
       dir = Paths.get(siteRoot);
       registerSubDirs(dir, watchService);
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       System.err.println("Invalid path: " + siteRoot);
       return 1;
     }
 
     while (true) {
       WatchKey key;
-      try{
+      try {
         key = watchService.take();
-      }
-      catch (InterruptedException e){
+      } catch (InterruptedException e) {
         System.out.println("Watcher interrupted");
         return 0;
       }
@@ -234,57 +233,54 @@ public class BuildCmd implements Callable<Integer> {
 
       // Ne reconstruit pas le site quand build est changé
       // (Sinon reconstruction en boucle)
-      if (!fileChanged.equals("build")){
+      if (!fileChanged.equals("build")) {
         System.out.println("Change detected");
         buildingStatus = buildWebsite();
-        if (buildingStatus != 0){
+        if (buildingStatus != 0) {
           return buildingStatus;
         }
       }
 
-      if (!key.reset())
-        return 0;
+      if (!key.reset()) return 0;
     }
   }
 
   /**
    * Enregistre tous les sous-dossiers du site dans le watcher
+   *
    * @param startPath le dossier racine du site
    * @param watchService le watcher
    * @throws IOException si le dossier n'est pas trouvé
    */
-  private void registerSubDirs(Path startPath,
-                               WatchService watchService) throws IOException {
+  private void registerSubDirs(Path startPath, WatchService watchService) throws IOException {
     Files.walkFileTree(
-            startPath,
-            new FileVisitor<>() {
-              @Override
-              public FileVisitResult preVisitDirectory(
-                      Path path, BasicFileAttributes basicFileAttributes) throws IOException {
+        startPath,
+        new FileVisitor<>() {
+          @Override
+          public FileVisitResult preVisitDirectory(
+              Path path, BasicFileAttributes basicFileAttributes) throws IOException {
 
-                // ignore inside build folder
-                if (path.toString().equals(startPath + "/build"))
-                  return FileVisitResult.SKIP_SUBTREE;
+            // ignore inside build folder
+            if (path.toString().equals(startPath + "/build")) return FileVisitResult.SKIP_SUBTREE;
 
-                path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
-                return FileVisitResult.CONTINUE;
-              }
+            path.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE);
+            return FileVisitResult.CONTINUE;
+          }
 
-              @Override
-              public FileVisitResult visitFile(Path path, BasicFileAttributes attr) {
-                return FileVisitResult.CONTINUE;
-              }
+          @Override
+          public FileVisitResult visitFile(Path path, BasicFileAttributes attr) {
+            return FileVisitResult.CONTINUE;
+          }
 
-              @Override
-              public FileVisitResult visitFileFailed(Path path, IOException e) {
-                return FileVisitResult.CONTINUE;
-              }
+          @Override
+          public FileVisitResult visitFileFailed(Path path, IOException e) {
+            return FileVisitResult.CONTINUE;
+          }
 
-              @Override
-              public FileVisitResult postVisitDirectory(Path path, IOException e) {
-                return FileVisitResult.CONTINUE;
-              }
-            });
+          @Override
+          public FileVisitResult postVisitDirectory(Path path, IOException e) {
+            return FileVisitResult.CONTINUE;
+          }
+        });
   }
 }
-
