@@ -117,7 +117,7 @@ public class TemplateInjector {
    * @return Le layout par défaut d'une page
    * @throws IOException si la ressource n'a pas pu être lue
    */
-  public String getDefaultLayout() throws IOException {
+  public static String getDefaultLayout() throws IOException {
     return Resources.readAsString("template/default_page.html");
   }
 }

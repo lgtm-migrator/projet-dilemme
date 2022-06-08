@@ -1,9 +1,14 @@
 package ch.heigvd.dil.data_structures;
 
+import ch.heigvd.dil.utils.FileHandler;
+import ch.heigvd.dil.utils.TemplateInjector;
 import ch.heigvd.dil.utils.parsers.PageContentSeparator;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -60,6 +65,13 @@ public class Page {
    */
   public String getMarkdown() {
     return markdown;
+  }
+
+  public void generate(String layout, TemplateInjector ti, String sitePath) throws IOException {
+    // convertit le fichier Markdown en HTML
+    File htmlFile = new File(sitePath + "/" + getPath().toString());
+    String htmlContent = ti.resolveProperties(layout, this);
+    FileHandler.write(htmlFile, htmlContent);
   }
 
   /** Représente la configuration d'une page. */
