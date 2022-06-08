@@ -90,9 +90,23 @@ public class Site {
 
   /** Représentes la configuration d'un site */
   public static class Config {
+    private String owner;
+    private String domain;
+    private String title;
 
     /** Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON */
     public Config() {}
+
+    /**
+     * @param title Le titre du site
+     * @param owner Le propriétaire du site
+     * @param domain Le domaine du site
+     */
+    public Config(String title, String owner, String domain) {
+      this.title = title;
+      this.owner = owner;
+      this.domain = domain;
+    }
 
     /**
      * Défini le propriétaire du site.
@@ -119,21 +133,6 @@ public class Site {
      */
     public void setTitle(String title) {
       this.title = title;
-    }
-
-    private String owner;
-    private String domain;
-    private String title;
-
-    /**
-     * @param title Le titre du site
-     * @param owner Le propriétaire du site
-     * @param domain Le domaine du site
-     */
-    public Config(String title, String owner, String domain) {
-      this.title = title;
-      this.owner = owner;
-      this.domain = domain;
     }
 
     /**
