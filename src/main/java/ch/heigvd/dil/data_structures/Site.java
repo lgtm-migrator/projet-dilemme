@@ -7,7 +7,7 @@ import org.everit.json.schema.ValidationException;
 
 /** Représente un site. */
 public class Site {
-  private Site.Config config;
+  private final Site.Config config;
   private final Path path;
   private final ArrayList<Page> pages = new ArrayList<>();
 
@@ -47,38 +47,10 @@ public class Site {
   }
 
   /**
-   * @return Le titre du site
-   */
-  public String getTitle() {
-    return config.getTitle();
-  }
-
-  /**
-   * @return Le propriétaire du site
-   */
-  public String getOwner() {
-    return config.getOwner();
-  }
-
-  /**
-   * @return Le domain du site
-   */
-  public String getDomain() {
-    return config.getDomain();
-  }
-
-  /**
    * @return la configuration du site
    */
   public Site.Config getConfig() {
     return config;
-  }
-
-  /**
-   * @return La configuration du site au format JSON
-   */
-  public String configToJSON() {
-    return config.getJSON();
   }
 
   /**
@@ -90,9 +62,23 @@ public class Site {
 
   /** Représentes la configuration d'un site */
   public static class Config {
+    private String owner;
+    private String domain;
+    private String title;
 
     /** Constructeur par défaut nécessaire à l'instanciation au moyen d'un JSON */
     public Config() {}
+
+    /**
+     * @param title Le titre du site
+     * @param owner Le propriétaire du site
+     * @param domain Le domaine du site
+     */
+    public Config(String title, String owner, String domain) {
+      this.title = title;
+      this.owner = owner;
+      this.domain = domain;
+    }
 
     /**
      * Défini le propriétaire du site.
@@ -119,21 +105,6 @@ public class Site {
      */
     public void setTitle(String title) {
       this.title = title;
-    }
-
-    private String owner;
-    private String domain;
-    private String title;
-
-    /**
-     * @param title Le titre du site
-     * @param owner Le propriétaire du site
-     * @param domain Le domaine du site
-     */
-    public Config(String title, String owner, String domain) {
-      this.title = title;
-      this.owner = owner;
-      this.domain = domain;
     }
 
     /**

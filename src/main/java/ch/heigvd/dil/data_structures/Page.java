@@ -16,7 +16,7 @@ import org.everit.json.schema.ValidationException;
 
 /** Représente une page. */
 public class Page {
-  private final Page.Config pageConfig;
+  private final Page.Config config;
   private final String markdown;
   private final Path path;
 
@@ -27,7 +27,7 @@ public class Page {
    * @param markdown Contenu markdown dans le corps de la page
    */
   public Page(Config pageConfig, String markdown) {
-    this.pageConfig = pageConfig;
+    this.config = pageConfig;
     this.markdown = markdown;
     path = Paths.get("");
   }
@@ -40,7 +40,7 @@ public class Page {
    */
   public Page(String fileContent, Path path) throws ParseException, ValidationException {
     PageContentSeparator sep = new PageContentSeparator(fileContent);
-    pageConfig = sep.getConfig();
+    config = sep.getConfig();
     markdown = sep.getContent();
     this.path = path;
   }
@@ -48,8 +48,8 @@ public class Page {
   /**
    * @return La configuration de la page
    */
-  public Page.Config getPageConfig() {
-    return pageConfig;
+  public Page.Config getConfig() {
+    return config;
   }
 
   /**

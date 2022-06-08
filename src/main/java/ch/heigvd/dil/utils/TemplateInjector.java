@@ -99,7 +99,7 @@ public class TemplateInjector {
 
     ObjectNode rootNode = mapper.createObjectNode();
 
-    ObjectNode page_node = mapper.readValue(page.getPageConfig().getJSON(), ObjectNode.class);
+    ObjectNode page_node = mapper.readValue(page.getConfig().getJSON(), ObjectNode.class);
     rootNode.set("page", page_node);
 
     ObjectNode site_node = mapper.readValue(site.getConfig().getJSON(), ObjectNode.class);
