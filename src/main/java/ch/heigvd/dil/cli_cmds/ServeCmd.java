@@ -11,16 +11,22 @@ public class ServeCmd implements Callable<Integer> {
   @CommandLine.Parameters(description = "The site path to serve")
   String path;
 
+  @CommandLine.Option(
+      names = "--watch",
+      description = "Automatically rebuild " + "and reload the site when a file is changed")
+  boolean watchOption;
+
   @Override
   public Integer call() {
     new CommandLine(new BuildCmd()).execute(path);
 
-    // Serve the site
-    Javalin.create(
-            config -> {
-              config.addStaticFiles(path + "/build", Location.EXTERNAL);
-            })
-        .start(8080);
+    // Démarre le serveur
+    Javalin.create(config -> config.addStaticFiles(path + "/build", Location.EXTERNAL)).start(8080);
+
+    if (watchOption)
+      // à chaque changement de fichier, le site est reconstruit
+      // et le serveur est rechargé automatiquement
+      new CommandLine(new BuildCmd()).execute(path, "--watch");
 
     return 0;
   }
