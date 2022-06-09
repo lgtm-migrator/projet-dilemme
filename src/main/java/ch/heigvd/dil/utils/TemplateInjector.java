@@ -15,7 +15,6 @@ import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import java.io.*;
-import java.nio.file.Files;
 
 /** Permet de résoudre les variables Handlebars dans un fichier. */
 public class TemplateInjector {
