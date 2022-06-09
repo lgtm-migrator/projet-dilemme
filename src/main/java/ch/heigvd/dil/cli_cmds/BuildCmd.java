@@ -51,7 +51,6 @@ public class BuildCmd implements Callable<Integer> {
    */
   int buildWebsite() {
     System.out.println("Building site...");
-    boolean status;
 
     File[] allFiles = new File(siteRoot).listFiles();
 
@@ -156,7 +155,7 @@ public class BuildCmd implements Callable<Integer> {
 
     for (File f : files) {
       if (f.isDirectory()) {
-        ArrayList<String> ignoredDirs = new ArrayList<String>(Arrays.asList("build", "template"));
+        ArrayList<String> ignoredDirs = new ArrayList<>(Arrays.asList("build", "template"));
         if (ignoredDirs.contains(f.getName())) continue;
         // crée un sous-dossier dans build
         String subFolder = folderPath + "/" + f.getName();
