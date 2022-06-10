@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 import org.everit.json.schema.ValidationException;
+import org.json.JSONException;
 import picocli.CommandLine;
 
 /**
@@ -173,9 +174,11 @@ public class BuildCmd implements Callable<Integer> {
         try {
           Page page = new Page(FileHandler.read(f), path);
           site.addPage(page);
-        } catch (ParseException e) {
-          System.err.println(
-              "Warning : Bad page format. " + f.getName() + " not generated. Continuing...");
+        } catch (ParseException | JSONException e) {
+          System.out.println(
+                  "File " + f.getName() + " only copied because it is not a valid " +
+                          "page. Continuing...");
+          Files.copy(f.toPath(), Paths.get(siteRoot, "build" + folderPath + "/" + f.getName()));
         } catch (ValidationException e) {
           System.err.println(
               "Warning : Bad configuration in page "
