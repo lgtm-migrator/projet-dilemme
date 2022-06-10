@@ -176,8 +176,10 @@ public class BuildCmd implements Callable<Integer> {
           site.addPage(page);
         } catch (ParseException | JSONException e) {
           System.out.println(
-                  "File " + f.getName() + " only copied because it is not a valid " +
-                          "page. Continuing...");
+              "File "
+                  + f.getName()
+                  + " only copied because it is not a valid "
+                  + "page. Continuing...");
           Files.copy(f.toPath(), Paths.get(siteRoot, "build" + folderPath + "/" + f.getName()));
         } catch (ValidationException e) {
           System.err.println(
