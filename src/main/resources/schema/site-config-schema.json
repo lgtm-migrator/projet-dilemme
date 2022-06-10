@@ -4,6 +4,7 @@
   "description": "Site configuration",
   "required": ["title", "owner", "domain"],
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "title": {
       "description": "Web site's title",
