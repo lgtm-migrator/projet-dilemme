@@ -15,7 +15,6 @@ import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import com.github.jknack.handlebars.io.FileTemplateLoader;
 import com.github.jknack.handlebars.io.TemplateLoader;
 import java.io.*;
-import java.nio.file.Files;
 
 /** Permet de résoudre les variables Handlebars dans un fichier. */
 public class TemplateInjector {
@@ -35,20 +34,6 @@ public class TemplateInjector {
 
     handlebars = new Handlebars().with(fileLoader, classPathLoader);
     this.site = site;
-  }
-
-  /**
-   * Résout les variables Handlebars (propriétés) du layout.
-   *
-   * @param layout Le layout à utiliser
-   * @param page La page à résoudre
-   * @return La page finale au format HTML, avec les propriétés résolues
-   * @throws IOException si le JSON permettant de résoudre les propriétés n'a pas pu être généré
-   *     correctement
-   */
-  public String resolveProperties(File layout, Page page) throws IOException {
-    String content = Files.readString(layout.toPath());
-    return resolveProperties(content, page);
   }
 
   /**
