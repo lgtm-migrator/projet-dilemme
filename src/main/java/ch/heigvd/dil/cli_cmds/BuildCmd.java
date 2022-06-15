@@ -176,9 +176,11 @@ public class BuildCmd implements Callable<Integer> {
           site.addPage(page);
         } catch (ParseException | JSONException e) {
           Files.copy(f.toPath(), Paths.get(siteRoot, "build" + folderPath + "/" + f.getName()));
-          System.out.println("The file `" + f.getName()
+          System.out.println(
+              "The file `"
+                  + f.getName()
                   + "` has only been copied because it is not a valid Markdown page.");
-          
+
         } catch (ValidationException e) {
           System.err.println(
               "Warning : Bad configuration in page "
