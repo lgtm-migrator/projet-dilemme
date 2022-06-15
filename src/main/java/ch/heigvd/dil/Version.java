@@ -28,5 +28,5 @@ public class Version {
     return major + "." + minor + "." + patch;
   }
 
-  public static final Version CURRENT = new Version(0, 1, 0);
+  public static final Version CURRENT = new Version(1, 0, 0);
 }
