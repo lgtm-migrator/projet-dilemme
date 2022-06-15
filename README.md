@@ -109,8 +109,8 @@ If you want to create an even more complex template you can add "sub layout" fil
   ├── config.json
   ├── index.md
   └── template/
-         ├── layout.html
-         └── menu.html
+         ├── layout.html
+         └── menu.html
 
   ```
 <br>
@@ -160,6 +160,4 @@ If you want to create an even more complex template you can add "sub layout" fil
 <br> <br>
 
 ### Limitations
-This tool has a lot of great features, but it also has some limitations:
-- You cannot create a folder named `build` inside other folders
-- If you add a folder while you have the `--watch` option, the tool will not be able to find the folder
+- All folders named `build` or `template`, other than those at the site's root folder, will be ignored during the build process.
