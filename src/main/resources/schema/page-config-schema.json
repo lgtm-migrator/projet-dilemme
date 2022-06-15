@@ -4,6 +4,7 @@
   "description": "Page configuration",
   "required": [ "title", "author", "date"],
   "type": "object",
+  "additionalProperties": false,
   "properties": {
     "title": {
       "description": "Page's title",
